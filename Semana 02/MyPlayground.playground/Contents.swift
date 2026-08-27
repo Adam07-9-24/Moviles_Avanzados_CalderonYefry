@@ -20,3 +20,6 @@ let examenFinal = Double(readLine() ?? "") ?? 0
 let promedio = (examenParcial * parcial) +
                (notaTrabajo * trabajo) +
                (examenFinal * final)
+// mostrar los datos
+print("Alumno: \(alumno)")
+print("Promedio final: \(promedio)")
