@@ -80,3 +80,28 @@ if let prestamo = prestamo, let devolucion = devolucion {
         }
     }
 }
+
+print("\n----- RESULTADO -----")
+print("Libro: \(tituloLibro)")
+print("Usuario: \(tipoUsuario)")
+print("Fecha Préstamo: \(fechaPrestamo)")
+
+if let limite = fechaLimite {
+    print("Fecha Límite: \(formatoFecha.string(from: limite))")
+}
+
+print("Fecha Devolución: \(fechaDevolucion)")
+print("Días de Atraso: \(diasAtraso)")
+print("Multa Total: S/ \(String(format: "%.2f", multaTotal))")
+
+if diasAtraso > 0 {
+    print("Estado: Devuelto con atraso")
+} else {
+    print("Estado: Devuelto a tiempo")
+}
+
+if diasAtraso >= 10 {
+    print("Situación: Usuario suspendido para nuevos préstamos")
+} else {
+    print("Situación: Usuario habilitado")
+}
