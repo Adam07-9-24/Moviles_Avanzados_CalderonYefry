@@ -171,3 +171,52 @@ if datosValidosIA { // Permite realizar los cálculos solamente cuando todos los
     print("Puntos de fidelidad: \(puntosFidelidadIA)") // Imprime los puntos completos obtenidos por la compra.
     print(separadorIA) // Imprime la última línea separadora del ticket.
 } // Finaliza los cálculos y el ticket ejecutados cuando los datos son válidos.
+
+
+// ===== EJERCICIO 7: JUEGO DE ADIVINANZA - IA =====
+
+let numeroSecretoIA = 42 // Guarda el número fijo que el jugador debe adivinar.
+
+let intentoIA1 = 20 // Guarda el valor que se probará en el primer intento.
+let intentoIA2 = 50 // Guarda el valor que se probará en el segundo intento.
+let intentoIA3 = 35 // Guarda el valor que se probará en el tercer intento.
+let intentoIA4 = 42 // Guarda el valor que se probará en el cuarto intento.
+let intentoIA5 = 60 // Guarda el valor que se probaría en el quinto intento.
+
+var numeroIntentoIA = 1 // Lleva la cuenta del intento que se está realizando.
+var intentoActualIA = intentoIA1 // Guarda el valor que se comparará con el número secreto.
+var encontradoIA = false // Indica si alguno de los intentos acertó el número secreto.
+
+while numeroIntentoIA <= 5 && !encontradoIA { // Repite mientras queden intentos y todavía no se haya acertado.
+    if numeroIntentoIA == 1 { // Comprueba si corresponde cargar el valor del primer intento.
+        intentoActualIA = intentoIA1 // Coloca el primer valor simulado como intento actual.
+    } else if numeroIntentoIA == 2 { // Comprueba si corresponde cargar el valor del segundo intento.
+        intentoActualIA = intentoIA2 // Coloca el segundo valor simulado como intento actual.
+    } else if numeroIntentoIA == 3 { // Comprueba si corresponde cargar el valor del tercer intento.
+        intentoActualIA = intentoIA3 // Coloca el tercer valor simulado como intento actual.
+    } else if numeroIntentoIA == 4 { // Comprueba si corresponde cargar el valor del cuarto intento.
+        intentoActualIA = intentoIA4 // Coloca el cuarto valor simulado como intento actual.
+    } else if numeroIntentoIA == 5 { // Comprueba si corresponde cargar el valor del quinto intento.
+        intentoActualIA = intentoIA5 // Coloca el quinto valor simulado como intento actual.
+    } // Finaliza la selección del valor correspondiente al intento actual.
+
+    print("Intento \(numeroIntentoIA): \(intentoActualIA)") // Muestra el número de intento y el valor que se está probando.
+
+    if intentoActualIA > numeroSecretoIA { // Comprueba si el valor probado es mayor que el número secreto.
+        print("Muy alto") // Informa que el jugador debe probar con un número menor.
+    } else if intentoActualIA < numeroSecretoIA { // Comprueba si el valor probado es menor que el número secreto.
+        print("Muy bajo") // Informa que el jugador debe probar con un número mayor.
+    } else { // Se ejecuta cuando el intento actual es igual al número secreto.
+        print("¡Correcto!") // Informa que el jugador encontró el número secreto.
+        encontradoIA = true // Marca el número secreto como encontrado para detener el while.
+        print("Adivinaste en \(numeroIntentoIA) intentos") // Muestra cuántos intentos se necesitaron para acertar.
+    } // Finaliza la comparación entre el intento actual y el número secreto.
+
+    if !encontradoIA { // Comprueba si todavía es necesario avanzar al siguiente intento.
+        numeroIntentoIA += 1 // Incrementa en uno el contador para continuar con el próximo intento.
+    } // Finaliza la actualización del contador de intentos.
+} // Finaliza el while cuando se acierta o se terminan los cinco intentos.
+
+if !encontradoIA { // Comprueba después del while si ninguno de los cinco intentos fue correcto.
+    print("Perdiste. El número era: \(numeroSecretoIA)") // Muestra el número secreto cuando el jugador agota sus intentos.
+} // Finaliza la comprobación del caso de pérdida.
