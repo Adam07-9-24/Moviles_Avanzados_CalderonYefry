@@ -259,3 +259,100 @@ default:
 }
 
 // PREDICT 5: Imprime "Vocal".
+
+
+// ===== EJERCICIO 3: FOR-IN =====
+
+// --- Ejemplo (ya resuelto): ---
+
+// Imprime los números del 1 al 5:
+for i in 1...5 {
+    print("Número: \(i)")
+}
+
+
+// --- TODO 7: Tabla de multiplicar del 7 ---
+
+for i in 1...12 {
+    print("7 x \(i) = \(7 * i)")
+}
+
+
+// --- TODO 8: Sumatoria del 1 al 100 ---
+
+var suma = 0
+
+for i in 1...100 {
+    suma = suma + i
+}
+
+print("La suma del 1 al 100 es: \(suma)")
+
+
+// --- TODO 9: Factorial de 8 ---
+
+var factorial = 1
+
+for i in 1...8 {
+    factorial = factorial * i
+}
+
+print("8! = \(factorial)")
+
+
+// --- TODO 10: Patrón de asteriscos ---
+
+for i in 1...5 {
+    var linea = ""
+
+    for _ in 1...i {
+        linea += "*"
+    }
+
+    print(linea)
+}
+
+
+// --- FIX 4: Números pares del 2 al 20 ---
+
+for i in 1...20 {
+    if i % 2 == 0 { // Corrección: se compara el residuo con 0 para identificar números pares.
+        print(i)
+    }
+}
+
+
+// --- FIX 5: Cuenta regresiva ---
+
+// Corrección: el bucle original contaba hacia adelante; stride permite recorrer hacia atrás.
+for i in stride(from: 10, through: 1, by: -1) {
+    print(i)
+}
+
+
+// PREDICT 6
+
+var total = 0
+
+for i in 1...5 {
+    total += i
+}
+
+print(total)
+
+// PREDICT 6: ¿Valor final? 15 ¿Cuántas iteraciones? 5
+
+
+// PREDICT 7
+
+var texto = ""
+
+for _ in 1...3 {
+    texto += "Hola "
+}
+
+print(texto)
+
+// PREDICT 7: Imprime "Hola Hola Hola ".
+// Se usa _ cuando necesitamos repetir el bucle, pero no necesitamos utilizar
+// el valor de cada iteración.
