@@ -119,3 +119,56 @@ for (nombre, edad) in edades {
 
 print("Mayores de 21: \(mayores)")
 // ANALYZE 1: Recorre las edades, guarda los nombres con 21 años o más e imprime: Mayores de 21: ["Luis"]
+
+do {
+    // ===== TODO 8: Eliminar duplicados =====
+    var numeros: [Int] = []
+
+    for i in 1...8 {
+        print("Número \(i):")
+        let n = Int(readLine() ?? "") ?? 0
+        numeros.append(n)
+    }
+
+    print("Con duplicados: \(numeros)")
+
+    let sinDuplicados = Array(Set(numeros)).sorted()
+
+    print("Sin duplicados: \(sinDuplicados)")
+
+    // ===== TODO 9: Comparar asistencia =====
+    var alumnosLunes: Set<String> = []
+
+    for i in 1...4 {
+        print("Alumno del lunes \(i):")
+        let nombre = readLine() ?? ""
+        alumnosLunes.insert(nombre)
+    }
+
+    var alumnosMartes: Set<String> = []
+
+    for i in 1...4 {
+        print("Alumno del martes \(i):")
+        let nombre = readLine() ?? ""
+        alumnosMartes.insert(nombre)
+    }
+
+    let ambosDias = alumnosLunes.intersection(alumnosMartes)
+    let soloLunes = alumnosLunes.subtracting(alumnosMartes)
+    let soloMartes = alumnosMartes.subtracting(alumnosLunes)
+
+    print("Ambos días: \(ambosDias)")
+    print("Solo lunes: \(soloLunes)")
+    print("Solo martes: \(soloMartes)")
+
+    // ===== PREDICT =====
+    let a: Set = [1, 2, 3, 4, 5]
+    let b: Set = [4, 5, 6, 7, 8]
+
+    print(a.intersection(b)) // PREDICT 5: [4, 5] (el orden puede variar)
+    print(a.union(b).count) // PREDICT 6: 8
+    print(a.subtracting(b)) // PREDICT 7: [1, 2, 3] (el orden puede variar)
+
+    var repetidos: Set = ["A", "B", "A", "C", "B"]
+    print(repetidos.count) // PREDICT 8: 3
+}
