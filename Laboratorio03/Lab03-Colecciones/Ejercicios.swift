@@ -139,3 +139,145 @@ do { // Crea un ámbito independiente para las variables del Ejercicio 6.
         print("\(nombre): \(promedio)") // Muestra cada nombre junto con su promedio ya ordenado.
     } // Cierra el recorrido de la lista ordenada.
 } // Cierra el ámbito independiente del Ejercicio 6.
+
+// Desarrollado por: Calderon Yefry
+// ===== EJERCICIO 7: Inventario con menú — con IA =====
+do { // Crea un ámbito independiente para las variables del Ejercicio 7.
+    var cantidadProductos = 0 // Guarda una cantidad inicial inválida para activar la validación.
+
+    while cantidadProductos <= 0 { // Repite la solicitud hasta recibir una cantidad mayor que cero.
+        print("¿Cuántos productos desea registrar?") // Solicita el número de productos del inventario.
+        let entradaCantidad = readLine() ?? "" // Lee la cantidad escrita o usa una cadena vacía si no hay entrada.
+
+        if let cantidadValida = Int(entradaCantidad), cantidadValida > 0 { // Comprueba que la entrada sea un entero positivo.
+            cantidadProductos = cantidadValida // Conserva la cantidad válida para terminar la repetición.
+        } else { // Atiende texto, cero, números negativos o una entrada vacía.
+            print("Cantidad inválida. Ingrese un número mayor que 0.") // Explica la condición necesaria para continuar.
+        } // Cierra la validación de la cantidad ingresada.
+    } // Cierra el ciclo que garantiza una cantidad válida de productos.
+
+    var preciosInventario: [String: Double] = [:] // Relaciona cada nombre de producto con su precio.
+    var stocksInventario: [String: Int] = [:] // Relaciona cada nombre de producto con su cantidad disponible.
+
+    for numeroProducto in 1...cantidadProductos { // Repite el registro para cada producto solicitado.
+        var nombreProducto = "" // Prepara una cadena vacía para validar el nombre del producto actual.
+
+        while nombreProducto.isEmpty { // Repite la solicitud hasta recibir un nombre no vacío y no repetido.
+            print("Producto \(numeroProducto) - Nombre:") // Solicita el nombre del producto actual.
+            let nombreIngresado = readLine() ?? "" // Lee el nombre o usa una cadena vacía si no hay entrada.
+
+            if nombreIngresado.isEmpty { // Detecta cuando no se escribió ningún nombre.
+                print("Nombre inválido. No puede quedar vacío.") // Informa que el nombre es obligatorio.
+            } else if preciosInventario[nombreIngresado] != nil { // Comprueba si el nombre ya está registrado como clave.
+                print("Producto repetido. Ingrese un nombre diferente.") // Evita reemplazar un producto existente.
+            } else { // Atiende un nombre válido que todavía no existe en el inventario.
+                nombreProducto = nombreIngresado // Guarda el nombre validado del producto actual.
+            } // Cierra la validación del nombre ingresado.
+        } // Cierra el ciclo que garantiza un nombre válido y único.
+
+        var precioProducto = 0.0 // Reserva el precio que se almacenará después de validarlo.
+        var precioValido = false // Indica que todavía no se ha recibido un precio aceptable.
+
+        while !precioValido { // Repite la solicitud hasta recibir un precio numérico no negativo.
+            print("Precio de \(nombreProducto):") // Solicita el precio del producto cuyo nombre fue validado.
+            let entradaPrecio = readLine() ?? "" // Lee el precio o usa una cadena vacía si no hay entrada.
+
+            if let precioIngresado = Double(entradaPrecio), precioIngresado >= 0 { // Valida que el precio sea numérico y mayor o igual que cero.
+                precioProducto = precioIngresado // Guarda el precio que cumple la condición requerida.
+                precioValido = true // Marca el precio como válido para finalizar la repetición.
+            } else { // Atiende texto, una entrada vacía o un precio negativo.
+                print("Precio inválido. Ingrese un número mayor o igual que 0.") // Informa el rango permitido para el precio.
+            } // Cierra la validación del precio ingresado.
+        } // Cierra el ciclo que garantiza un precio válido.
+
+        var stockProducto = 0 // Reserva el stock que se almacenará después de validarlo.
+        var stockValido = false // Indica que todavía no se ha recibido un stock aceptable.
+
+        while !stockValido { // Repite la solicitud hasta recibir un stock entero no negativo.
+            print("Stock de \(nombreProducto):") // Solicita la cantidad disponible del producto actual.
+            let entradaStock = readLine() ?? "" // Lee el stock o usa una cadena vacía si no hay entrada.
+
+            if let stockIngresado = Int(entradaStock), stockIngresado >= 0 { // Valida que el stock sea un entero mayor o igual que cero.
+                stockProducto = stockIngresado // Guarda el stock que cumple la condición requerida.
+                stockValido = true // Marca el stock como válido para finalizar la repetición.
+            } else { // Atiende texto, decimales, entradas vacías o números negativos.
+                print("Stock inválido. Ingrese un entero mayor o igual que 0.") // Informa el tipo y rango permitidos para el stock.
+            } // Cierra la validación del stock ingresado.
+        } // Cierra el ciclo que garantiza un stock válido.
+
+        preciosInventario[nombreProducto] = precioProducto // Guarda el precio usando el nombre como clave.
+        stocksInventario[nombreProducto] = stockProducto // Guarda el stock usando la misma clave del producto.
+    } // Cierra el registro de todos los productos solicitados.
+
+    var opcionMenu = 0 // Inicia el menú con una opción distinta de salir.
+
+    while opcionMenu != 5 { // Mantiene activo el menú hasta que el usuario elija la opción cinco.
+        print("===== MENÚ DE INVENTARIO =====") // Muestra el encabezado principal del menú.
+        print("1. Ver inventario") // Presenta la opción que lista todos los productos.
+        print("2. Buscar producto") // Presenta la opción que consulta un producto por nombre.
+        print("3. Ver productos con stock bajo") // Presenta la opción que filtra stocks menores que cinco.
+        print("4. Ver valor total del inventario") // Presenta la opción que calcula el valor acumulado.
+        print("5. Salir") // Presenta la opción que termina el menú.
+        print("Seleccione una opción:") // Solicita al usuario una de las cinco opciones disponibles.
+        let entradaOpcion = readLine() ?? "" // Lee la opción o usa una cadena vacía si no hay entrada.
+
+        if let opcionValida = Int(entradaOpcion) { // Comprueba si la opción ingresada puede convertirse en entero.
+            opcionMenu = opcionValida // Guarda el entero para procesarlo con el switch.
+        } else { // Atiende texto o una entrada vacía en el menú.
+            opcionMenu = 0 // Asigna un valor inválido controlado para mostrar el mensaje correspondiente.
+        } // Cierra la conversión de la opción del menú.
+
+        switch opcionMenu { // Ejecuta la operación relacionada con la opción elegida.
+        case 1: // Atiende la solicitud de mostrar todo el inventario.
+            print("===== INVENTARIO =====") // Presenta el encabezado del reporte completo.
+            print("Nombre | Precio | Stock") // Muestra los títulos de las columnas del inventario.
+
+            for (nombre, precio) in preciosInventario { // Recorre cada producto junto con su precio almacenado.
+                if let stock = stocksInventario[nombre] { // Obtiene el stock asociado usando el mismo nombre como clave.
+                    print("\(nombre) | S/. \(precio) | \(stock)") // Muestra nombre, precio y stock en una línea formateada.
+                } // Cierra la obtención segura del stock del producto.
+            } // Cierra el recorrido de todos los productos del inventario.
+        case 2: // Atiende la solicitud de buscar un producto específico.
+            print("Nombre del producto que desea buscar:") // Solicita el nombre exacto que se consultará.
+            let productoBuscado = readLine() ?? "" // Lee el nombre buscado o usa una cadena vacía si no hay entrada.
+
+            if let precioEncontrado = preciosInventario[productoBuscado], let stockEncontrado = stocksInventario[productoBuscado] { // Obtiene el precio y stock cuando el nombre existe.
+                print("===== PRODUCTO ENCONTRADO =====") // Presenta el encabezado del resultado exitoso.
+                print("Nombre: \(productoBuscado)") // Muestra el nombre del producto encontrado.
+                print("Precio: S/. \(precioEncontrado)") // Muestra el precio asociado al producto encontrado.
+                print("Stock: \(stockEncontrado)") // Muestra la cantidad disponible del producto encontrado.
+            } else { // Atiende un nombre que no existe en los diccionarios.
+                print("Producto no encontrado") // Informa que la búsqueda no produjo coincidencias.
+            } // Cierra la búsqueda segura del producto.
+        case 3: // Atiende la solicitud de mostrar productos con stock bajo.
+            print("===== PRODUCTOS CON STOCK BAJO =====") // Presenta el encabezado del reporte de existencias bajas.
+            var hayStockBajo = false // Registra inicialmente que todavía no se encontró stock menor que cinco.
+
+            for (nombre, stock) in stocksInventario { // Recorre cada producto junto con su stock almacenado.
+                if stock < 5 { // Comprueba la condición exacta que define un stock bajo.
+                    print("\(nombre) | Stock: \(stock)") // Muestra el nombre y stock del producto que cumple la condición.
+                    hayStockBajo = true // Registra que al menos un producto tiene stock bajo.
+                } // Cierra la comprobación de stock menor que cinco.
+            } // Cierra el recorrido de todos los stocks del inventario.
+
+            if !hayStockBajo { // Comprueba si el recorrido terminó sin encontrar existencias bajas.
+                print("No hay productos con stock bajo.") // Informa que todos los productos tienen stock de cinco o más.
+            } // Cierra la comprobación del resultado vacío.
+        case 4: // Atiende la solicitud de calcular el valor total del inventario.
+            var valorTotalInventario = 0.0 // Inicia en cero el acumulador monetario del inventario.
+
+            for (nombre, precio) in preciosInventario { // Recorre cada producto junto con su precio unitario.
+                if let stock = stocksInventario[nombre] { // Obtiene de forma segura el stock asociado al producto.
+                    valorTotalInventario += precio * Double(stock) // Suma el precio multiplicado por la cantidad disponible.
+                } // Cierra la obtención segura del stock usado en el cálculo.
+            } // Cierra el recorrido que acumula el valor de todos los productos.
+
+            print("===== VALOR TOTAL =====") // Presenta el encabezado del reporte monetario.
+            print("Valor total del inventario: S/. \(valorTotalInventario)") // Muestra la suma de precio por stock de todos los productos.
+        case 5: // Atiende la opción seleccionada para finalizar el menú.
+            print("Gracias por utilizar el sistema de inventario.") // Muestra el mensaje de despedida antes de salir.
+        default: // Atiende cualquier entero distinto de las cinco opciones válidas.
+            print("Opción no válida. Intente nuevamente.") // Informa el error antes de volver a mostrar el menú.
+        } // Cierra la selección de operaciones del menú.
+    } // Cierra el ciclo cuando la opción elegida es cinco.
+} // Cierra el ámbito independiente del Ejercicio 7.
