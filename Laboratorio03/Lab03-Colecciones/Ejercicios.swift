@@ -172,3 +172,52 @@ do {
     var repetidos: Set = ["A", "B", "A", "C", "B"]
     print(repetidos.count) // PREDICT 8: 3
 }
+
+do {
+    // ===== EJERCICIO 4: Combinación de Colecciones =====
+    // ===== TODO 10: Inventario de productos =====
+    // Desarrollado por: Calderon Yefry
+
+    // Pide N productos con nombre, precio y stock
+    // Calcula valor total y muestra stock bajo
+
+    var precios: [String: Double] = [:]
+    var stocks: [String: Int] = [:]
+
+    print("¿Cuántos productos?")
+    let n = Int(readLine() ?? "") ?? 0
+
+    if n > 0 {
+        for i in 1...n {
+            print("Producto \(i) - Nombre:")
+            let nombre = readLine() ?? ""
+
+            print("Precio:")
+            let precio = Double(readLine() ?? "") ?? 0
+
+            print("Stock:")
+            let stock = Int(readLine() ?? "") ?? 0
+
+            precios[nombre] = precio
+            stocks[nombre] = stock
+        }
+    }
+
+    var valorInventario = 0.0
+
+    for (nombre, stock) in stocks {
+        if let precio = precios[nombre] {
+            valorInventario += precio * Double(stock)
+        }
+    }
+
+    print("Valor total del inventario: S/. \(valorInventario)")
+
+    print("Productos con stock bajo:")
+
+    for (nombre, stock) in stocks {
+        if stock < 5 {
+            print("\(nombre): \(stock)")
+        }
+    }
+}
