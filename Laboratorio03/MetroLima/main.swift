@@ -183,6 +183,226 @@ func mostrarEstacionesPorLinea() {
     }
 }
 
+func buscarEstacion() {
+    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    var continuarBusqueda = true
+
+    while continuarBusqueda {
+        print("----------------------------------------")
+        print("          BUSCAR UNA ESTACIÓN")
+        print("----------------------------------------")
+        print()
+        print("1. Escribir el nombre de una estación")
+        print("2. Ver estaciones disponibles")
+        print("0. Volver al menú principal")
+        print("\nSeleccione una opción:")
+
+        let opcion = readLine() ?? "0"
+
+        switch opcion {
+        case "1":
+            var solicitarNombre = true
+
+            while solicitarNombre {
+                print("\nIngrese el nombre de la estación:")
+                print("Ejemplo: Miguel Grau, Gamarra, San Borja Sur")
+
+                let textoBusqueda = readLine() ?? ""
+                let textoNormalizado = normalizar(textoBusqueda)
+                var nombreOficial = ""
+                var lineasEncontradas: [String] = []
+
+                for nombreLinea in ordenLineas {
+                    if let estaciones = lineas[nombreLinea] {
+                        for estacion in estaciones {
+                            if normalizar(estacion) == textoNormalizado {
+                                if nombreOficial.isEmpty {
+                                    nombreOficial = estacion
+                                }
+
+                                lineasEncontradas.append(nombreLinea)
+                            }
+                        }
+                    }
+                }
+
+                if !lineasEncontradas.isEmpty {
+                    print("\nEstación encontrada: \(nombreOficial)")
+                    print("Pertenece a:")
+
+                    for nombreLinea in lineasEncontradas {
+                        print("- \(nombreLinea)")
+                    }
+
+                    solicitarNombre = false
+                } else {
+                    print("\nNo se encontró la estación.")
+                    print()
+                    print("1. Intentar otra búsqueda")
+                    print("2. Ver estaciones disponibles")
+                    print("0. Volver al menú principal")
+                    print("\nSeleccione una opción:")
+
+                    var opcionValida = false
+
+                    while !opcionValida {
+                        let opcionNoEncontrada = readLine() ?? "0"
+
+                        switch opcionNoEncontrada {
+                        case "1":
+                            opcionValida = true
+                        case "2":
+                            mostrarEstacionesPorLinea()
+                            opcionValida = true
+                            solicitarNombre = false
+                        case "0":
+                            opcionValida = true
+                            solicitarNombre = false
+                            continuarBusqueda = false
+                        default:
+                            print("Opción no válida. Intente nuevamente.")
+                            print("\nSeleccione una opción:")
+                        }
+                    }
+                }
+            }
+        case "2":
+            mostrarEstacionesPorLinea()
+        case "0":
+            continuarBusqueda = false
+        default:
+            print("Opción no válida. Intente nuevamente.")
+        }
+    }
+}
+
+func mostrarEstacionesCercanas() {
+    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    var continuarConsulta = true
+
+    while continuarConsulta {
+        print("----------------------------------------")
+        print("        VER ESTACIONES CERCANAS")
+        print("----------------------------------------")
+        print()
+        print("1. Escribir el nombre de una estación")
+        print("2. Ver estaciones disponibles")
+        print("0. Volver al menú principal")
+        print("\nSeleccione una opción:")
+
+        let opcion = readLine() ?? "0"
+
+        switch opcion {
+        case "1":
+            var solicitarNombre = true
+
+            while solicitarNombre {
+                print("\nIngrese el nombre de la estación:")
+                print("Ejemplo: Miguel Grau, Gamarra, San Borja Sur")
+
+                let textoBusqueda = readLine() ?? ""
+                let textoNormalizado = normalizar(textoBusqueda)
+                var nombreOficial = ""
+                var cantidadCoincidencias = 0
+
+                for nombreLinea in ordenLineas {
+                    if let estaciones = lineas[nombreLinea] {
+                        for estacion in estaciones {
+                            if normalizar(estacion) == textoNormalizado {
+                                if nombreOficial.isEmpty {
+                                    nombreOficial = estacion
+                                }
+
+                                cantidadCoincidencias += 1
+                            }
+                        }
+                    }
+                }
+
+                if cantidadCoincidencias > 0 {
+                    print("\nEstación: \(nombreOficial)")
+
+                    if cantidadCoincidencias > 1 {
+                        print()
+                    }
+
+                    var coincidenciasMostradas = 0
+
+                    for nombreLinea in ordenLineas {
+                        if let estaciones = lineas[nombreLinea] {
+                            for (indice, estacion) in estaciones.enumerated() {
+                                if normalizar(estacion) == textoNormalizado {
+                                    if coincidenciasMostradas > 0 {
+                                        print()
+                                    }
+
+                                    if cantidadCoincidencias == 1 {
+                                        print("Línea: \(nombreLinea)")
+                                    } else {
+                                        print(nombreLinea)
+                                    }
+
+                                    var estacionAnterior = "No tiene"
+                                    var estacionSiguiente = "No tiene"
+
+                                    if indice > 0 {
+                                        estacionAnterior = estaciones[indice - 1]
+                                    }
+
+                                    if indice + 1 < estaciones.count {
+                                        estacionSiguiente = estaciones[indice + 1]
+                                    }
+
+                                    print("Estación anterior: \(estacionAnterior)")
+                                    print("Estación siguiente: \(estacionSiguiente)")
+                                    coincidenciasMostradas += 1
+                                }
+                            }
+                        }
+                    }
+
+                    solicitarNombre = false
+                } else {
+                    print("\nNo se encontró la estación.")
+                    print()
+                    print("1. Intentar otra búsqueda")
+                    print("2. Ver estaciones disponibles")
+                    print("0. Volver al menú principal")
+                    print("\nSeleccione una opción:")
+
+                    var opcionValida = false
+
+                    while !opcionValida {
+                        let opcionNoEncontrada = readLine() ?? "0"
+
+                        switch opcionNoEncontrada {
+                        case "1":
+                            opcionValida = true
+                        case "2":
+                            mostrarEstacionesPorLinea()
+                            opcionValida = true
+                            solicitarNombre = false
+                        case "0":
+                            opcionValida = true
+                            solicitarNombre = false
+                            continuarConsulta = false
+                        default:
+                            print("Opción no válida. Intente nuevamente.")
+                            print("\nSeleccione una opción:")
+                        }
+                    }
+                }
+            }
+        case "2":
+            mostrarEstacionesPorLinea()
+        case "0":
+            continuarConsulta = false
+        default:
+            print("Opción no válida. Intente nuevamente.")
+        }
+    }
+}
+
 var continuar = true
 
 while continuar {
@@ -207,7 +427,11 @@ while continuar {
             mostrarLineas()
         case "2":
             mostrarEstacionesPorLinea()
-        case "3", "4", "5", "6", "7", "8":
+        case "3":
+            buscarEstacion()
+        case "4":
+            mostrarEstacionesCercanas()
+        case "5", "6", "7", "8":
             print("Esta función será implementada próximamente.")
         case "0":
             print("Gracias por usar el sistema del Metro de Lima y Callao.")
