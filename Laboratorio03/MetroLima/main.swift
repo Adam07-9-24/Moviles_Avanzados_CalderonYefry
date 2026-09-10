@@ -786,6 +786,179 @@ func mostrarRuta() {
     }
 }
 
+func filtrarEstaciones() {
+    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    var continuarFiltro = true
+
+    while continuarFiltro {
+        print("----------------------------------------")
+        print("      FILTRAR ESTACIONES POR NOMBRE")
+        print("----------------------------------------")
+        print()
+        print("1. Ingresar texto para filtrar")
+        print("2. Ver estaciones disponibles")
+        print("0. Volver al menú principal")
+        print("\nSeleccione una opción:")
+
+        let opcion = readLine() ?? "0"
+
+        switch opcion {
+        case "1":
+            var solicitarFiltro = true
+
+            while solicitarFiltro {
+                print("\nIngrese una palabra o parte del nombre:")
+                print("Ejemplo: San, Plaza, Santa")
+
+                let textoFiltro = readLine() ?? ""
+                let filtroNormalizado = normalizar(textoFiltro)
+                let textoMostrado = textoFiltro.trimmingCharacters(
+                    in: .whitespacesAndNewlines
+                )
+                var nombresOficiales: [String: String] = [:]
+                var lineasPorEstacion: [String: [String]] = [:]
+                var ordenResultados: [String] = []
+
+                for nombreLinea in ordenLineas {
+                    if let estaciones = lineas[nombreLinea] {
+                        for estacion in estaciones {
+                            let estacionNormalizada = normalizar(estacion)
+
+                            if !filtroNormalizado.isEmpty &&
+                               estacionNormalizada.contains(filtroNormalizado) {
+                                if lineasPorEstacion[estacionNormalizada] == nil {
+                                    nombresOficiales[estacionNormalizada] = estacion
+                                    lineasPorEstacion[estacionNormalizada] = [nombreLinea]
+                                    ordenResultados.append(estacionNormalizada)
+                                } else if let lineasRegistradas = lineasPorEstacion[estacionNormalizada],
+                                          !lineasRegistradas.contains(nombreLinea) {
+                                    lineasPorEstacion[estacionNormalizada, default: []].append(nombreLinea)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if !ordenResultados.isEmpty {
+                    print("\nResultados encontrados para \"\(textoMostrado)\":")
+                    print()
+
+                    for (indice, claveEstacion) in ordenResultados.enumerated() {
+                        if let nombreOficial = nombresOficiales[claveEstacion],
+                           let lineasEncontradas = lineasPorEstacion[claveEstacion] {
+                            let textoLineas = lineasEncontradas.joined(separator: ", ")
+                            print("\(indice + 1). \(nombreOficial) - \(textoLineas)")
+                        }
+                    }
+
+                    print(
+                        "\nCantidad de estaciones encontradas: " +
+                        "\(ordenResultados.count)"
+                    )
+                    solicitarFiltro = false
+                } else {
+                    print(
+                        "\nNo se encontraron estaciones que coincidan con el filtro."
+                    )
+                    print()
+                    print("1. Intentar otro filtro")
+                    print("2. Ver estaciones disponibles")
+                    print("0. Volver al menú principal")
+                    print("\nSeleccione una opción:")
+
+                    var opcionValida = false
+
+                    while !opcionValida {
+                        let opcionSinResultados = readLine() ?? "0"
+
+                        switch opcionSinResultados {
+                        case "1":
+                            opcionValida = true
+                        case "2":
+                            mostrarEstacionesPorLinea()
+                            opcionValida = true
+                            solicitarFiltro = false
+                        case "0":
+                            opcionValida = true
+                            solicitarFiltro = false
+                            continuarFiltro = false
+                        default:
+                            print("Opción no válida. Intente nuevamente.")
+                            print("\nSeleccione una opción:")
+                        }
+                    }
+                }
+            }
+        case "2":
+            mostrarEstacionesPorLinea()
+        case "0":
+            continuarFiltro = false
+        default:
+            print("Opción no válida. Intente nuevamente.")
+        }
+    }
+}
+
+func mostrarInformacionMetro() {
+    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    var totalEstacionesRegistradas = 0
+    var nombresOficiales: [String: String] = [:]
+    var lineasPorEstacion: [String: [String]] = [:]
+    var ordenEstaciones: [String] = []
+
+    for nombreLinea in ordenLineas {
+        if let estaciones = lineas[nombreLinea] {
+            totalEstacionesRegistradas += estaciones.count
+
+            for estacion in estaciones {
+                let estacionNormalizada = normalizar(estacion)
+
+                if lineasPorEstacion[estacionNormalizada] == nil {
+                    nombresOficiales[estacionNormalizada] = estacion
+                    lineasPorEstacion[estacionNormalizada] = [nombreLinea]
+                    ordenEstaciones.append(estacionNormalizada)
+                } else if let lineasRegistradas = lineasPorEstacion[estacionNormalizada],
+                          !lineasRegistradas.contains(nombreLinea) {
+                    lineasPorEstacion[estacionNormalizada, default: []].append(nombreLinea)
+                }
+            }
+        }
+    }
+
+    var estacionesConexion: [String] = []
+
+    for claveEstacion in ordenEstaciones {
+        if let lineasEncontradas = lineasPorEstacion[claveEstacion],
+           lineasEncontradas.count > 1 {
+            estacionesConexion.append(claveEstacion)
+        }
+    }
+
+    print("----------------------------------------")
+    print("    INFORMACIÓN GENERAL DEL METRO")
+    print("----------------------------------------")
+    print("\nCantidad de líneas: \(lineas.count)")
+    print("\nEstaciones por línea:")
+
+    for nombreLinea in ordenLineas {
+        let cantidadEstaciones = lineas[nombreLinea]?.count ?? 0
+        print("- \(nombreLinea): \(cantidadEstaciones)")
+    }
+
+    print("\nTotal de estaciones registradas: \(totalEstacionesRegistradas)")
+    print("Estaciones únicas: \(ordenEstaciones.count)")
+    print("Estaciones de conexión: \(estacionesConexion.count)")
+    print("\nEstaciones de conexión:")
+
+    for claveEstacion in estacionesConexion {
+        if let nombreOficial = nombresOficiales[claveEstacion],
+           let lineasEncontradas = lineasPorEstacion[claveEstacion] {
+            let textoLineas = lineasEncontradas.joined(separator: ", ")
+            print("- \(nombreOficial): \(textoLineas)")
+        }
+    }
+}
+
 var continuar = true
 
 while continuar {
@@ -800,7 +973,7 @@ while continuar {
     print("5. Ver conexiones de una estación")
     print("6. Cómo llegar de una estación a otra")
     print("7. Filtrar estaciones por nombre")
-    print("8. Ver resumen del Metro")
+    print("8. Ver información general del Metro")
     print("0. Salir")
     print("\nSeleccione una opción:")
 
@@ -818,8 +991,10 @@ while continuar {
             mostrarConexionesEstacion()
         case "6":
             mostrarRuta()
-        case "7", "8":
-            print("Esta función será implementada próximamente.")
+        case "7":
+            filtrarEstaciones()
+        case "8":
+            mostrarInformacionMetro()
         case "0":
             print("Gracias por usar el sistema del Metro de Lima y Callao.")
             continuar = false

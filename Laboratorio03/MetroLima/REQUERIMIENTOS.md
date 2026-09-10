@@ -28,9 +28,9 @@ El usuario podrá ingresar una estación de origen y una estación de destino. E
 
 El usuario podrá ingresar una palabra o parte del nombre de una estación y el sistema mostrará todas las estaciones que coincidan con la búsqueda.
 
-## RF08 - Ver resumen del Metro
+## RF08 - Ver información general del Metro
 
-El sistema mostrará información general como la cantidad de líneas, la cantidad total de estaciones y la cantidad de estaciones con conexiones entre líneas.
+El sistema mostrará información general de la red registrada, como la cantidad de líneas, la cantidad de estaciones por línea, el total de estaciones y las estaciones que permiten conexión entre líneas.
 
 ## RF09 - Validar las búsquedas ingresadas
 
