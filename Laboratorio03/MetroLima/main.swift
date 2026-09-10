@@ -13,7 +13,7 @@ let lineas: [String: [String]] = [
         "Atocongo",
         "Jorge Chávez",
         "Ayacucho",
-        "Los Cabitos",
+        "Cabitos",
         "Angamos",
         "San Borja Sur",
         "La Cultura",
@@ -403,6 +403,389 @@ func mostrarEstacionesCercanas() {
     }
 }
 
+func mostrarConexionesEstacion() {
+    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    var continuarConsulta = true
+
+    while continuarConsulta {
+        print("----------------------------------------")
+        print("     VER CONEXIONES DE UNA ESTACIÓN")
+        print("----------------------------------------")
+        print()
+        print("1. Escribir el nombre de una estación")
+        print("2. Ver estaciones disponibles")
+        print("0. Volver al menú principal")
+        print("\nSeleccione una opción:")
+
+        let opcion = readLine() ?? "0"
+
+        switch opcion {
+        case "1":
+            var solicitarNombre = true
+
+            while solicitarNombre {
+                print("\nIngrese el nombre de la estación:")
+                print("Ejemplo: Cabitos, La Cultura, Estación Central")
+
+                let textoBusqueda = readLine() ?? ""
+                let textoNormalizado = normalizar(textoBusqueda)
+                var nombreOficial = ""
+                var lineasEncontradas: [String] = []
+
+                for nombreLinea in ordenLineas {
+                    if let estaciones = lineas[nombreLinea] {
+                        for estacion in estaciones {
+                            if normalizar(estacion) == textoNormalizado {
+                                if nombreOficial.isEmpty {
+                                    nombreOficial = estacion
+                                }
+
+                                lineasEncontradas.append(nombreLinea)
+                            }
+                        }
+                    }
+                }
+
+                if lineasEncontradas.count > 1 {
+                    print("\nEstación: \(nombreOficial)")
+                    print("Conexiones disponibles:")
+
+                    for nombreLinea in lineasEncontradas {
+                        print("- \(nombreLinea)")
+                    }
+
+                    solicitarNombre = false
+                } else if lineasEncontradas.count == 1 {
+                    print("\nEstación: \(nombreOficial)")
+                    print("Pertenece a: \(lineasEncontradas[0])")
+                    print("Esta estación no tiene conexión con otra línea.")
+                    solicitarNombre = false
+                } else {
+                    print("\nNo se encontró la estación.")
+                    print()
+                    print("1. Intentar otra búsqueda")
+                    print("2. Ver estaciones disponibles")
+                    print("0. Volver al menú principal")
+                    print("\nSeleccione una opción:")
+
+                    var opcionValida = false
+
+                    while !opcionValida {
+                        let opcionNoEncontrada = readLine() ?? "0"
+
+                        switch opcionNoEncontrada {
+                        case "1":
+                            opcionValida = true
+                        case "2":
+                            mostrarEstacionesPorLinea()
+                            opcionValida = true
+                            solicitarNombre = false
+                        case "0":
+                            opcionValida = true
+                            solicitarNombre = false
+                            continuarConsulta = false
+                        default:
+                            print("Opción no válida. Intente nuevamente.")
+                            print("\nSeleccione una opción:")
+                        }
+                    }
+                }
+            }
+        case "2":
+            mostrarEstacionesPorLinea()
+        case "0":
+            continuarConsulta = false
+        default:
+            print("Opción no válida. Intente nuevamente.")
+        }
+    }
+}
+
+struct NodoRuta: Hashable {
+    let linea: String
+    let indiceEstacion: Int
+}
+
+func obtenerNombreEstacion(_ nodo: NodoRuta) -> String {
+    if let estaciones = lineas[nodo.linea],
+       nodo.indiceEstacion >= 0,
+       nodo.indiceEstacion < estaciones.count {
+        return estaciones[nodo.indiceEstacion]
+    }
+
+    return ""
+}
+
+func calcularRuta(desde nombreOrigen: String, hasta nombreDestino: String) -> [NodoRuta] {
+    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    let origenNormalizado = normalizar(nombreOrigen)
+    let destinoNormalizado = normalizar(nombreDestino)
+    var nodosOrigen: [NodoRuta] = []
+    var nodosDestino = Set<NodoRuta>()
+
+    for nombreLinea in ordenLineas {
+        if let estaciones = lineas[nombreLinea] {
+            for (indice, estacion) in estaciones.enumerated() {
+                let nodo = NodoRuta(linea: nombreLinea, indiceEstacion: indice)
+                let estacionNormalizada = normalizar(estacion)
+
+                if estacionNormalizada == origenNormalizado {
+                    nodosOrigen.append(nodo)
+                }
+
+                if estacionNormalizada == destinoNormalizado {
+                    nodosDestino.insert(nodo)
+                }
+            }
+        }
+    }
+
+    if nodosOrigen.isEmpty || nodosDestino.isEmpty {
+        return []
+    }
+
+    // Se comienza desde la estación de origen en cada línea donde aparece.
+    var cola = nodosOrigen
+    var visitados = Set(nodosOrigen)
+    var nodoAnterior: [NodoRuta: NodoRuta] = [:]
+    var posicionCola = 0
+    var nodoDestinoEncontrado: NodoRuta?
+
+    // Se continúa por niveles hasta encontrar el destino.
+    while posicionCola < cola.count && nodoDestinoEncontrado == nil {
+        let nodoActual = cola[posicionCola]
+        posicionCola += 1
+
+        if nodosDestino.contains(nodoActual) {
+            nodoDestinoEncontrado = nodoActual
+        } else {
+            // Se revisan las estaciones a las que se puede avanzar.
+            var siguientesNodos: [NodoRuta] = []
+
+            if let estaciones = lineas[nodoActual.linea] {
+                if nodoActual.indiceEstacion > 0 {
+                    siguientesNodos.append(
+                        NodoRuta(
+                            linea: nodoActual.linea,
+                            indiceEstacion: nodoActual.indiceEstacion - 1
+                        )
+                    )
+                }
+
+                if nodoActual.indiceEstacion + 1 < estaciones.count {
+                    siguientesNodos.append(
+                        NodoRuta(
+                            linea: nodoActual.linea,
+                            indiceEstacion: nodoActual.indiceEstacion + 1
+                        )
+                    )
+                }
+
+                let nombreActualNormalizado = normalizar(
+                    obtenerNombreEstacion(nodoActual)
+                )
+
+                for otraLinea in ordenLineas {
+                    if otraLinea != nodoActual.linea {
+                        if let otrasEstaciones = lineas[otraLinea] {
+                            for (indice, estacion) in otrasEstaciones.enumerated() {
+                                if normalizar(estacion) == nombreActualNormalizado {
+                                    siguientesNodos.append(
+                                        NodoRuta(
+                                            linea: otraLinea,
+                                            indiceEstacion: indice
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            for siguienteNodo in siguientesNodos {
+                // Se evita visitar repetidamente la misma estación de una línea.
+                if !visitados.contains(siguienteNodo) {
+                    visitados.insert(siguienteNodo)
+                    nodoAnterior[siguienteNodo] = nodoActual
+                    cola.append(siguienteNodo)
+                }
+            }
+        }
+    }
+
+    if var nodoActual = nodoDestinoEncontrado {
+        var ruta = [nodoActual]
+
+        while let anterior = nodoAnterior[nodoActual] {
+            ruta.insert(anterior, at: 0)
+            nodoActual = anterior
+        }
+
+        return ruta
+    }
+
+    return []
+}
+
+func mostrarRuta() {
+    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    var continuarConsulta = true
+
+    while continuarConsulta {
+        print("----------------------------------------")
+        print("    CÓMO LLEGAR DE UNA ESTACIÓN A OTRA")
+        print("----------------------------------------")
+        print()
+        print("1. Ingresar estación de origen y destino")
+        print("2. Ver estaciones disponibles")
+        print("0. Volver al menú principal")
+        print("\nSeleccione una opción:")
+
+        let opcion = readLine() ?? "0"
+
+        switch opcion {
+        case "1":
+            var solicitarEstaciones = true
+
+            while solicitarEstaciones {
+                print("\nIngrese la estación de origen:")
+                print("Ejemplo: Gamarra")
+                let origenIngresado = readLine() ?? ""
+
+                print("\nIngrese la estación de destino:")
+                print("Ejemplo: Estación Central")
+                let destinoIngresado = readLine() ?? ""
+
+                let origenNormalizado = normalizar(origenIngresado)
+                let destinoNormalizado = normalizar(destinoIngresado)
+                var nombreOrigenOficial = ""
+                var nombreDestinoOficial = ""
+
+                for nombreLinea in ordenLineas {
+                    if let estaciones = lineas[nombreLinea] {
+                        for estacion in estaciones {
+                            if nombreOrigenOficial.isEmpty &&
+                               normalizar(estacion) == origenNormalizado {
+                                nombreOrigenOficial = estacion
+                            }
+
+                            if nombreDestinoOficial.isEmpty &&
+                               normalizar(estacion) == destinoNormalizado {
+                                nombreDestinoOficial = estacion
+                            }
+                        }
+                    }
+                }
+
+                if nombreOrigenOficial.isEmpty || nombreDestinoOficial.isEmpty {
+                    print()
+
+                    if nombreOrigenOficial.isEmpty {
+                        print("No se encontró la estación de origen.")
+                    }
+
+                    if nombreDestinoOficial.isEmpty {
+                        print("No se encontró la estación de destino.")
+                    }
+
+                    print()
+                    print("1. Intentar nuevamente")
+                    print("2. Ver estaciones disponibles")
+                    print("0. Volver al menú principal")
+                    print("\nSeleccione una opción:")
+
+                    var opcionValida = false
+
+                    while !opcionValida {
+                        let opcionEstacionInvalida = readLine() ?? "0"
+
+                        switch opcionEstacionInvalida {
+                        case "1":
+                            opcionValida = true
+                        case "2":
+                            mostrarEstacionesPorLinea()
+                            opcionValida = true
+                            solicitarEstaciones = false
+                        case "0":
+                            opcionValida = true
+                            solicitarEstaciones = false
+                            continuarConsulta = false
+                        default:
+                            print("Opción no válida. Intente nuevamente.")
+                            print("\nSeleccione una opción:")
+                        }
+                    }
+                } else if origenNormalizado == destinoNormalizado {
+                    print("\nYa se encuentra en la estación indicada.")
+                    solicitarEstaciones = false
+                } else {
+                    let ruta = calcularRuta(
+                        desde: nombreOrigenOficial,
+                        hasta: nombreDestinoOficial
+                    )
+
+                    if ruta.isEmpty {
+                        print("\nNo se encontró una ruta disponible.")
+                    } else {
+                        print("\nRuta encontrada:")
+                        print()
+                        print("Origen: \(nombreOrigenOficial)")
+                        print("Destino: \(nombreDestinoOficial)")
+                        print()
+
+                        let primerNodo = ruta[0]
+                        print("Tome la \(primerNodo.linea).")
+                        print()
+                        print(obtenerNombreEstacion(primerNodo))
+
+                        var cantidadEstacionesRecorridas = 0
+                        var cambiosLinea = 0
+
+                        if ruta.count > 1 {
+                            for indiceRuta in 1..<ruta.count {
+                                let nodoPrevio = ruta[indiceRuta - 1]
+                                let nodoActual = ruta[indiceRuta]
+
+                                if nodoPrevio.linea != nodoActual.linea {
+                                    let estacionConexion = obtenerNombreEstacion(nodoActual)
+                                    print()
+                                    print(
+                                        "Cambie de \(nodoPrevio.linea) a " +
+                                        "\(nodoActual.linea) en \(estacionConexion)."
+                                    )
+                                    print()
+                                    cambiosLinea += 1
+                                } else {
+                                    print("↓")
+                                    print(obtenerNombreEstacion(nodoActual))
+                                    cantidadEstacionesRecorridas += 1
+                                }
+                            }
+                        }
+
+                        print("\nDestino alcanzado.")
+                        print()
+                        print(
+                            "Cantidad de estaciones recorridas: " +
+                            "\(cantidadEstacionesRecorridas)"
+                        )
+                        print("Cambios de línea: \(cambiosLinea)")
+                    }
+
+                    solicitarEstaciones = false
+                }
+            }
+        case "2":
+            mostrarEstacionesPorLinea()
+        case "0":
+            continuarConsulta = false
+        default:
+            print("Opción no válida. Intente nuevamente.")
+        }
+    }
+}
+
 var continuar = true
 
 while continuar {
@@ -431,7 +814,11 @@ while continuar {
             buscarEstacion()
         case "4":
             mostrarEstacionesCercanas()
-        case "5", "6", "7", "8":
+        case "5":
+            mostrarConexionesEstacion()
+        case "6":
+            mostrarRuta()
+        case "7", "8":
             print("Esta función será implementada próximamente.")
         case "0":
             print("Gracias por usar el sistema del Metro de Lima y Callao.")
