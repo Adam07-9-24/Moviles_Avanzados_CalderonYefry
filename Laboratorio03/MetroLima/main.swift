@@ -128,3 +128,94 @@ func normalizar(_ texto: String) -> String {
         .folding(options: .diacriticInsensitive, locale: .current)
         .lowercased()
 }
+
+func mostrarLineas() {
+    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+
+    print("========================================")
+    print("        LÍNEAS DISPONIBLES")
+    print("========================================")
+    print()
+
+    for (indice, nombreLinea) in ordenLineas.enumerated() {
+        print("\(indice + 1). \(nombreLinea)")
+    }
+}
+
+func mostrarEstacionesPorLinea() {
+    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+
+    print("----------------------------------------")
+    print("       VER ESTACIONES DE UNA LÍNEA")
+    print("----------------------------------------")
+    print()
+
+    for (indice, nombreLinea) in ordenLineas.enumerated() {
+        print("\(indice + 1). \(nombreLinea)")
+    }
+
+    print("\nSeleccione una línea:")
+    let opcion = readLine() ?? ""
+    let nombreLinea: String
+
+    switch opcion {
+    case "1":
+        nombreLinea = "Línea 1"
+    case "2":
+        nombreLinea = "Línea 2"
+    case "3":
+        nombreLinea = "Línea 3"
+    case "4":
+        nombreLinea = "Línea 4"
+    default:
+        print("Opción de línea no válida.")
+        return
+    }
+
+    if let estaciones = lineas[nombreLinea] {
+        print("\nLÍNEA \(opcion)")
+        print("Cantidad de estaciones: \(estaciones.count)")
+        print()
+
+        for (indice, estacion) in estaciones.enumerated() {
+            print("\(indice + 1). \(estacion)")
+        }
+    }
+}
+
+var continuar = true
+
+while continuar {
+    print("========================================")
+    print("       METRO DE LIMA Y CALLAO")
+    print("========================================")
+    print()
+    print("1. Ver líneas disponibles")
+    print("2. Ver estaciones de una línea")
+    print("3. Buscar una estación")
+    print("4. Ver estaciones cercanas")
+    print("5. Ver conexiones de una estación")
+    print("6. Cómo llegar de una estación a otra")
+    print("7. Filtrar estaciones por nombre")
+    print("8. Ver resumen del Metro")
+    print("0. Salir")
+    print("\nSeleccione una opción:")
+
+    if let opcion = readLine() {
+        switch opcion {
+        case "1":
+            mostrarLineas()
+        case "2":
+            mostrarEstacionesPorLinea()
+        case "3", "4", "5", "6", "7", "8":
+            print("Esta función será implementada próximamente.")
+        case "0":
+            print("Gracias por usar el sistema del Metro de Lima y Callao.")
+            continuar = false
+        default:
+            print("Opción no válida. Intente nuevamente.")
+        }
+    } else {
+        continuar = false
+    }
+}
