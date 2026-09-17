@@ -1,5 +1,4 @@
 import Foundation
-
 // MARK: - Datos del Metro
 
 let lineas: [String: [String]] = [
@@ -122,6 +121,7 @@ let lineas: [String: [String]] = [
     ]
 ]
 
+
 func normalizar(_ texto: String) -> String {
     return texto
         .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -129,34 +129,42 @@ func normalizar(_ texto: String) -> String {
         .lowercased()
 }
 
+
 func mostrarLineas() {
     let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+
 
     print("========================================")
     print("        LÍNEAS DISPONIBLES")
     print("========================================")
     print()
 
+
     for (indice, nombreLinea) in ordenLineas.enumerated() {
         print("\(indice + 1). \(nombreLinea)")
     }
 }
 
+
 func mostrarEstacionesPorLinea() {
     let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+
 
     print("----------------------------------------")
     print("       VER ESTACIONES DE UNA LÍNEA")
     print("----------------------------------------")
     print()
 
+
     for (indice, nombreLinea) in ordenLineas.enumerated() {
         print("\(indice + 1). \(nombreLinea)")
     }
 
+
     print("\nSeleccione una línea:")
     let opcion = readLine() ?? ""
     let nombreLinea: String
+
 
     switch opcion {
     case "1":
@@ -172,10 +180,12 @@ func mostrarEstacionesPorLinea() {
         return
     }
 
+
     if let estaciones = lineas[nombreLinea] {
         print("\nLÍNEA \(opcion)")
         print("Cantidad de estaciones: \(estaciones.count)")
         print()
+
 
         for (indice, estacion) in estaciones.enumerated() {
             print("\(indice + 1). \(estacion)")
@@ -183,9 +193,11 @@ func mostrarEstacionesPorLinea() {
     }
 }
 
+
 func buscarEstacion() {
     let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
     var continuarBusqueda = true
+
 
     while continuarBusqueda {
         print("----------------------------------------")
@@ -197,20 +209,25 @@ func buscarEstacion() {
         print("0. Volver al menú principal")
         print("\nSeleccione una opción:")
 
+
         let opcion = readLine() ?? "0"
+
 
         switch opcion {
         case "1":
             var solicitarNombre = true
 
+
             while solicitarNombre {
                 print("\nIngrese el nombre de la estación:")
                 print("Ejemplo: Miguel Grau, Gamarra, San Borja Sur")
+
 
                 let textoBusqueda = readLine() ?? ""
                 let textoNormalizado = normalizar(textoBusqueda)
                 var nombreOficial = ""
                 var lineasEncontradas: [String] = []
+
 
                 for nombreLinea in ordenLineas {
                     if let estaciones = lineas[nombreLinea] {
@@ -220,19 +237,23 @@ func buscarEstacion() {
                                     nombreOficial = estacion
                                 }
 
+
                                 lineasEncontradas.append(nombreLinea)
                             }
                         }
                     }
                 }
 
+
                 if !lineasEncontradas.isEmpty {
                     print("\nEstación encontrada: \(nombreOficial)")
                     print("Pertenece a:")
 
+
                     for nombreLinea in lineasEncontradas {
                         print("- \(nombreLinea)")
                     }
+
 
                     solicitarNombre = false
                 } else {
@@ -243,10 +264,13 @@ func buscarEstacion() {
                     print("0. Volver al menú principal")
                     print("\nSeleccione una opción:")
 
+
                     var opcionValida = false
+
 
                     while !opcionValida {
                         let opcionNoEncontrada = readLine() ?? "0"
+
 
                         switch opcionNoEncontrada {
                         case "1":
@@ -276,9 +300,11 @@ func buscarEstacion() {
     }
 }
 
+
 func mostrarEstacionesCercanas() {
     let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
     var continuarConsulta = true
+
 
     while continuarConsulta {
         print("----------------------------------------")
@@ -290,20 +316,25 @@ func mostrarEstacionesCercanas() {
         print("0. Volver al menú principal")
         print("\nSeleccione una opción:")
 
+
         let opcion = readLine() ?? "0"
+
 
         switch opcion {
         case "1":
             var solicitarNombre = true
 
+
             while solicitarNombre {
                 print("\nIngrese el nombre de la estación:")
                 print("Ejemplo: Miguel Grau, Gamarra, San Borja Sur")
+
 
                 let textoBusqueda = readLine() ?? ""
                 let textoNormalizado = normalizar(textoBusqueda)
                 var nombreOficial = ""
                 var cantidadCoincidencias = 0
+
 
                 for nombreLinea in ordenLineas {
                     if let estaciones = lineas[nombreLinea] {
@@ -313,20 +344,25 @@ func mostrarEstacionesCercanas() {
                                     nombreOficial = estacion
                                 }
 
+
                                 cantidadCoincidencias += 1
                             }
                         }
                     }
                 }
 
+
                 if cantidadCoincidencias > 0 {
                     print("\nEstación: \(nombreOficial)")
+
 
                     if cantidadCoincidencias > 1 {
                         print()
                     }
 
+
                     var coincidenciasMostradas = 0
+
 
                     for nombreLinea in ordenLineas {
                         if let estaciones = lineas[nombreLinea] {
@@ -336,22 +372,27 @@ func mostrarEstacionesCercanas() {
                                         print()
                                     }
 
+
                                     if cantidadCoincidencias == 1 {
                                         print("Línea: \(nombreLinea)")
                                     } else {
                                         print(nombreLinea)
                                     }
 
+
                                     var estacionAnterior = "No tiene"
                                     var estacionSiguiente = "No tiene"
+
 
                                     if indice > 0 {
                                         estacionAnterior = estaciones[indice - 1]
                                     }
 
+
                                     if indice + 1 < estaciones.count {
                                         estacionSiguiente = estaciones[indice + 1]
                                     }
+
 
                                     print("Estación anterior: \(estacionAnterior)")
                                     print("Estación siguiente: \(estacionSiguiente)")
@@ -360,6 +401,7 @@ func mostrarEstacionesCercanas() {
                             }
                         }
                     }
+
 
                     solicitarNombre = false
                 } else {
@@ -370,10 +412,13 @@ func mostrarEstacionesCercanas() {
                     print("0. Volver al menú principal")
                     print("\nSeleccione una opción:")
 
+
                     var opcionValida = false
+
 
                     while !opcionValida {
                         let opcionNoEncontrada = readLine() ?? "0"
+
 
                         switch opcionNoEncontrada {
                         case "1":
@@ -403,9 +448,11 @@ func mostrarEstacionesCercanas() {
     }
 }
 
+
 func mostrarConexionesEstacion() {
     let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
     var continuarConsulta = true
+
 
     while continuarConsulta {
         print("----------------------------------------")
@@ -417,20 +464,25 @@ func mostrarConexionesEstacion() {
         print("0. Volver al menú principal")
         print("\nSeleccione una opción:")
 
+
         let opcion = readLine() ?? "0"
+
 
         switch opcion {
         case "1":
             var solicitarNombre = true
 
+
             while solicitarNombre {
                 print("\nIngrese el nombre de la estación:")
                 print("Ejemplo: Cabitos, La Cultura, Estación Central")
+
 
                 let textoBusqueda = readLine() ?? ""
                 let textoNormalizado = normalizar(textoBusqueda)
                 var nombreOficial = ""
                 var lineasEncontradas: [String] = []
+
 
                 for nombreLinea in ordenLineas {
                     if let estaciones = lineas[nombreLinea] {
@@ -440,19 +492,23 @@ func mostrarConexionesEstacion() {
                                     nombreOficial = estacion
                                 }
 
+
                                 lineasEncontradas.append(nombreLinea)
                             }
                         }
                     }
                 }
 
+
                 if lineasEncontradas.count > 1 {
                     print("\nEstación: \(nombreOficial)")
                     print("Conexiones disponibles:")
 
+
                     for nombreLinea in lineasEncontradas {
                         print("- \(nombreLinea)")
                     }
+
 
                     solicitarNombre = false
                 } else if lineasEncontradas.count == 1 {
@@ -468,10 +524,13 @@ func mostrarConexionesEstacion() {
                     print("0. Volver al menú principal")
                     print("\nSeleccione una opción:")
 
+
                     var opcionValida = false
+
 
                     while !opcionValida {
                         let opcionNoEncontrada = readLine() ?? "0"
+
 
                         switch opcionNoEncontrada {
                         case "1":
@@ -501,10 +560,12 @@ func mostrarConexionesEstacion() {
     }
 }
 
+
 struct NodoRuta: Hashable {
     let linea: String
     let indiceEstacion: Int
 }
+
 
 func obtenerNombreEstacion(_ nodo: NodoRuta) -> String {
     if let estaciones = lineas[nodo.linea],
@@ -513,8 +574,10 @@ func obtenerNombreEstacion(_ nodo: NodoRuta) -> String {
         return estaciones[nodo.indiceEstacion]
     }
 
+
     return ""
 }
+
 
 func calcularRuta(desde nombreOrigen: String, hasta nombreDestino: String) -> [NodoRuta] {
     let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
@@ -523,15 +586,18 @@ func calcularRuta(desde nombreOrigen: String, hasta nombreDestino: String) -> [N
     var nodosOrigen: [NodoRuta] = []
     var nodosDestino = Set<NodoRuta>()
 
+
     for nombreLinea in ordenLineas {
         if let estaciones = lineas[nombreLinea] {
             for (indice, estacion) in estaciones.enumerated() {
                 let nodo = NodoRuta(linea: nombreLinea, indiceEstacion: indice)
                 let estacionNormalizada = normalizar(estacion)
 
+
                 if estacionNormalizada == origenNormalizado {
                     nodosOrigen.append(nodo)
                 }
+
 
                 if estacionNormalizada == destinoNormalizado {
                     nodosDestino.insert(nodo)
@@ -540,9 +606,11 @@ func calcularRuta(desde nombreOrigen: String, hasta nombreDestino: String) -> [N
         }
     }
 
+
     if nodosOrigen.isEmpty || nodosDestino.isEmpty {
         return []
     }
+
 
     // Se comienza desde la estación de origen en cada línea donde aparece.
     var cola = nodosOrigen
@@ -551,16 +619,19 @@ func calcularRuta(desde nombreOrigen: String, hasta nombreDestino: String) -> [N
     var posicionCola = 0
     var nodoDestinoEncontrado: NodoRuta?
 
+
     // Se continúa por niveles hasta encontrar el destino.
     while posicionCola < cola.count && nodoDestinoEncontrado == nil {
         let nodoActual = cola[posicionCola]
         posicionCola += 1
+
 
         if nodosDestino.contains(nodoActual) {
             nodoDestinoEncontrado = nodoActual
         } else {
             // Se revisan las estaciones a las que se puede avanzar.
             var siguientesNodos: [NodoRuta] = []
+
 
             if let estaciones = lineas[nodoActual.linea] {
                 if nodoActual.indiceEstacion > 0 {
@@ -572,6 +643,7 @@ func calcularRuta(desde nombreOrigen: String, hasta nombreDestino: String) -> [N
                     )
                 }
 
+
                 if nodoActual.indiceEstacion + 1 < estaciones.count {
                     siguientesNodos.append(
                         NodoRuta(
@@ -581,9 +653,11 @@ func calcularRuta(desde nombreOrigen: String, hasta nombreDestino: String) -> [N
                     )
                 }
 
+
                 let nombreActualNormalizado = normalizar(
                     obtenerNombreEstacion(nodoActual)
                 )
+
 
                 for otraLinea in ordenLineas {
                     if otraLinea != nodoActual.linea {
@@ -603,6 +677,7 @@ func calcularRuta(desde nombreOrigen: String, hasta nombreDestino: String) -> [N
                 }
             }
 
+
             for siguienteNodo in siguientesNodos {
                 // Se evita visitar repetidamente la misma estación de una línea.
                 if !visitados.contains(siguienteNodo) {
@@ -614,23 +689,29 @@ func calcularRuta(desde nombreOrigen: String, hasta nombreDestino: String) -> [N
         }
     }
 
+
     if var nodoActual = nodoDestinoEncontrado {
         var ruta = [nodoActual]
+
 
         while let anterior = nodoAnterior[nodoActual] {
             ruta.insert(anterior, at: 0)
             nodoActual = anterior
         }
 
+
         return ruta
     }
+
 
     return []
 }
 
+
 func mostrarRuta() {
     let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
     var continuarConsulta = true
+
 
     while continuarConsulta {
         print("----------------------------------------")
@@ -642,25 +723,31 @@ func mostrarRuta() {
         print("0. Volver al menú principal")
         print("\nSeleccione una opción:")
 
+
         let opcion = readLine() ?? "0"
+
 
         switch opcion {
         case "1":
             var solicitarEstaciones = true
+
 
             while solicitarEstaciones {
                 print("\nIngrese la estación de origen:")
                 print("Ejemplo: Gamarra")
                 let origenIngresado = readLine() ?? ""
 
+
                 print("\nIngrese la estación de destino:")
                 print("Ejemplo: Estación Central")
                 let destinoIngresado = readLine() ?? ""
+
 
                 let origenNormalizado = normalizar(origenIngresado)
                 let destinoNormalizado = normalizar(destinoIngresado)
                 var nombreOrigenOficial = ""
                 var nombreDestinoOficial = ""
+
 
                 for nombreLinea in ordenLineas {
                     if let estaciones = lineas[nombreLinea] {
@@ -670,6 +757,7 @@ func mostrarRuta() {
                                 nombreOrigenOficial = estacion
                             }
 
+
                             if nombreDestinoOficial.isEmpty &&
                                normalizar(estacion) == destinoNormalizado {
                                 nombreDestinoOficial = estacion
@@ -678,16 +766,20 @@ func mostrarRuta() {
                     }
                 }
 
+
                 if nombreOrigenOficial.isEmpty || nombreDestinoOficial.isEmpty {
                     print()
+
 
                     if nombreOrigenOficial.isEmpty {
                         print("No se encontró la estación de origen.")
                     }
 
+
                     if nombreDestinoOficial.isEmpty {
                         print("No se encontró la estación de destino.")
                     }
+
 
                     print()
                     print("1. Intentar nuevamente")
@@ -695,10 +787,13 @@ func mostrarRuta() {
                     print("0. Volver al menú principal")
                     print("\nSeleccione una opción:")
 
+
                     var opcionValida = false
+
 
                     while !opcionValida {
                         let opcionEstacionInvalida = readLine() ?? "0"
+
 
                         switch opcionEstacionInvalida {
                         case "1":
@@ -725,6 +820,7 @@ func mostrarRuta() {
                         hasta: nombreDestinoOficial
                     )
 
+
                     if ruta.isEmpty {
                         print("\nNo se encontró una ruta disponible.")
                     } else {
@@ -734,18 +830,22 @@ func mostrarRuta() {
                         print("Destino: \(nombreDestinoOficial)")
                         print()
 
+
                         let primerNodo = ruta[0]
                         print("Tome la \(primerNodo.linea).")
                         print()
                         print(obtenerNombreEstacion(primerNodo))
 
+
                         var cantidadEstacionesRecorridas = 0
                         var cambiosLinea = 0
+
 
                         if ruta.count > 1 {
                             for indiceRuta in 1..<ruta.count {
                                 let nodoPrevio = ruta[indiceRuta - 1]
                                 let nodoActual = ruta[indiceRuta]
+
 
                                 if nodoPrevio.linea != nodoActual.linea {
                                     let estacionConexion = obtenerNombreEstacion(nodoActual)
@@ -764,6 +864,7 @@ func mostrarRuta() {
                             }
                         }
 
+
                         print("\nDestino alcanzado.")
                         print()
                         print(
@@ -772,6 +873,7 @@ func mostrarRuta() {
                         )
                         print("Cambios de línea: \(cambiosLinea)")
                     }
+
 
                     solicitarEstaciones = false
                 }
@@ -786,9 +888,319 @@ func mostrarRuta() {
     }
 }
 
+
+func simularViaje(ruta: [NodoRuta], destino: String) {
+    guard !ruta.isEmpty else {
+        return
+    }
+
+
+    var indiceRuta = 0
+    var estacionesRestantes = 0
+
+
+    if ruta.count > 1 {
+        for indice in 1..<ruta.count {
+            let nombreAnterior = obtenerNombreEstacion(ruta[indice - 1])
+            let nombreActual = obtenerNombreEstacion(ruta[indice])
+
+
+            if normalizar(nombreAnterior) != normalizar(nombreActual) {
+                estacionesRestantes += 1
+            }
+        }
+    }
+
+
+    var viajeEnCurso = true
+
+
+    while viajeEnCurso {
+        let nodoActual = ruta[indiceRuta]
+
+
+        print("\n========================================")
+        print("           VIAJE INICIADO")
+        print("========================================")
+        print()
+        print("Estación actual: \(obtenerNombreEstacion(nodoActual))")
+        print("Línea actual: \(nodoActual.linea)")
+        print("Faltan \(estacionesRestantes) estaciones para llegar.")
+        print()
+        print("1. Avanzar a la siguiente estación")
+        print("0. Finalizar viaje")
+        print("\nSeleccione una opción:")
+
+
+        let opcion = readLine() ?? "0"
+
+
+        switch opcion {
+        case "1":
+            var avanzoAOtraEstacion = false
+
+
+            while indiceRuta + 1 < ruta.count && !avanzoAOtraEstacion {
+                let nodoPrevio = ruta[indiceRuta]
+                let nodoSiguiente = ruta[indiceRuta + 1]
+                let estacionPrevia = obtenerNombreEstacion(nodoPrevio)
+                let estacionSiguiente = obtenerNombreEstacion(nodoSiguiente)
+                let esMismaEstacion = normalizar(estacionPrevia) ==
+                    normalizar(estacionSiguiente)
+
+
+                indiceRuta += 1
+
+
+                if esMismaEstacion {
+                    if nodoPrevio.linea != nodoSiguiente.linea {
+                        print("\nConexión necesaria en \(estacionSiguiente).")
+                        print(
+                            "Cambie de \(nodoPrevio.linea) a " +
+                            "\(nodoSiguiente.linea)."
+                        )
+                    }
+                } else {
+                    estacionesRestantes -= 1
+                    avanzoAOtraEstacion = true
+
+
+                    while indiceRuta + 1 < ruta.count {
+                        let nodoConexionPrevio = ruta[indiceRuta]
+                        let nodoConexionSiguiente = ruta[indiceRuta + 1]
+                        let estacionConexionPrevia = obtenerNombreEstacion(
+                            nodoConexionPrevio
+                        )
+                        let estacionConexionSiguiente = obtenerNombreEstacion(
+                            nodoConexionSiguiente
+                        )
+
+
+                        if normalizar(estacionConexionPrevia) !=
+                           normalizar(estacionConexionSiguiente) {
+                            break
+                        }
+
+
+                        indiceRuta += 1
+
+
+                        if nodoConexionPrevio.linea != nodoConexionSiguiente.linea {
+                            print(
+                                "\nConexión necesaria en " +
+                                "\(estacionConexionSiguiente)."
+                            )
+                            print(
+                                "Cambie de \(nodoConexionPrevio.linea) a " +
+                                "\(nodoConexionSiguiente.linea)."
+                            )
+                        }
+                    }
+                }
+            }
+
+
+            if estacionesRestantes == 0 {
+                print("\n========================================")
+                print("          DESTINO ALCANZADO")
+                print("========================================")
+                print("\nHa llegado a \(destino).")
+                viajeEnCurso = false
+            } else if !avanzoAOtraEstacion {
+                viajeEnCurso = false
+            }
+        case "0":
+            print("\nViaje finalizado.")
+            viajeEnCurso = false
+        default:
+            print("Opción no válida. Intente nuevamente.")
+        }
+    }
+}
+
+
+func planificarViaje() {
+    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    var continuarPlanificacion = true
+
+
+    while continuarPlanificacion {
+        print("----------------------------------------")
+        print("          PLANIFICAR UN VIAJE")
+        print("----------------------------------------")
+        print()
+        print("1. Ingresar estación de origen y destino")
+        print("2. Ver estaciones disponibles")
+        print("0. Volver al menú principal")
+        print("\nSeleccione una opción:")
+
+
+        let opcion = readLine() ?? "0"
+
+
+        switch opcion {
+        case "1":
+            print("\nIngrese la estación de origen:")
+            print("Ejemplo: Gamarra")
+            let origenIngresado = readLine() ?? ""
+
+
+            print("\nIngrese la estación de destino:")
+            print("Ejemplo: Estación Central")
+            let destinoIngresado = readLine() ?? ""
+
+
+            let origenNormalizado = normalizar(origenIngresado)
+            let destinoNormalizado = normalizar(destinoIngresado)
+            var nombreOrigenOficial = ""
+            var nombreDestinoOficial = ""
+
+
+            for nombreLinea in ordenLineas {
+                if let estaciones = lineas[nombreLinea] {
+                    for estacion in estaciones {
+                        if nombreOrigenOficial.isEmpty &&
+                           normalizar(estacion) == origenNormalizado {
+                            nombreOrigenOficial = estacion
+                        }
+
+
+                        if nombreDestinoOficial.isEmpty &&
+                           normalizar(estacion) == destinoNormalizado {
+                            nombreDestinoOficial = estacion
+                        }
+                    }
+                }
+            }
+
+
+            if nombreOrigenOficial.isEmpty || nombreDestinoOficial.isEmpty {
+                print()
+
+
+                if nombreOrigenOficial.isEmpty {
+                    print("No se encontró la estación de origen.")
+                }
+
+
+                if nombreDestinoOficial.isEmpty {
+                    print("No se encontró la estación de destino.")
+                }
+
+
+                continue
+            }
+
+
+            if origenNormalizado == destinoNormalizado {
+                print("\nYa se encuentra en la estación de destino.")
+                continue
+            }
+
+
+            let ruta = calcularRuta(
+                desde: nombreOrigenOficial,
+                hasta: nombreDestinoOficial
+            )
+
+
+            if ruta.isEmpty {
+                print("\nNo se encontró una ruta disponible.")
+                continue
+            }
+
+
+            var estacionesParaLlegar = 0
+            var conexiones: [(estacion: String, desde: String, hasta: String)] = []
+
+
+            if ruta.count > 1 {
+                for indice in 1..<ruta.count {
+                    let nodoPrevio = ruta[indice - 1]
+                    let nodoActual = ruta[indice]
+                    let estacionPrevia = obtenerNombreEstacion(nodoPrevio)
+                    let estacionActual = obtenerNombreEstacion(nodoActual)
+
+
+                    if normalizar(estacionPrevia) != normalizar(estacionActual) {
+                        estacionesParaLlegar += 1
+                    }
+
+
+                    if nodoPrevio.linea != nodoActual.linea {
+                        conexiones.append(
+                            (
+                                estacion: estacionActual,
+                                desde: nodoPrevio.linea,
+                                hasta: nodoActual.linea
+                            )
+                        )
+                    }
+                }
+            }
+
+
+            print("\n========================================")
+            print("          VIAJE PLANIFICADO")
+            print("========================================")
+            print()
+            print("Origen: \(nombreOrigenOficial)")
+            print("Destino: \(nombreDestinoOficial)")
+            print("Estaciones para llegar: \(estacionesParaLlegar)")
+            print("Cambios de línea: \(conexiones.count)")
+
+
+            if !conexiones.isEmpty {
+                print("\nConexiones necesarias:")
+
+
+                for conexion in conexiones {
+                    print(
+                        "- \(conexion.estacion): \(conexion.desde) → " +
+                        "\(conexion.hasta)"
+                    )
+                }
+            }
+
+
+            var seleccionarAccion = true
+
+
+            while seleccionarAccion {
+                print("\n1. Iniciar viaje")
+                print("0. Volver")
+                print("\nSeleccione una opción:")
+
+
+                let opcionViaje = readLine() ?? "0"
+
+
+                switch opcionViaje {
+                case "1":
+                    // RF12: aquí se verificará y cobrará la tarifa de S/ 3.00.
+                    simularViaje(ruta: ruta, destino: nombreDestinoOficial)
+                    seleccionarAccion = false
+                case "0":
+                    seleccionarAccion = false
+                default:
+                    print("Opción no válida. Intente nuevamente.")
+                }
+            }
+        case "2":
+            mostrarEstacionesPorLinea()
+        case "0":
+            continuarPlanificacion = false
+        default:
+            print("Opción no válida. Intente nuevamente.")
+        }
+    }
+}
+
+
 func filtrarEstaciones() {
     let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
     var continuarFiltro = true
+
 
     while continuarFiltro {
         print("----------------------------------------")
@@ -800,15 +1212,19 @@ func filtrarEstaciones() {
         print("0. Volver al menú principal")
         print("\nSeleccione una opción:")
 
+
         let opcion = readLine() ?? "0"
+
 
         switch opcion {
         case "1":
             var solicitarFiltro = true
 
+
             while solicitarFiltro {
                 print("\nIngrese una palabra o parte del nombre:")
                 print("Ejemplo: San, Plaza, Santa")
+
 
                 let textoFiltro = readLine() ?? ""
                 let filtroNormalizado = normalizar(textoFiltro)
@@ -819,10 +1235,12 @@ func filtrarEstaciones() {
                 var lineasPorEstacion: [String: [String]] = [:]
                 var ordenResultados: [String] = []
 
+
                 for nombreLinea in ordenLineas {
                     if let estaciones = lineas[nombreLinea] {
                         for estacion in estaciones {
                             let estacionNormalizada = normalizar(estacion)
+
 
                             if !filtroNormalizado.isEmpty &&
                                estacionNormalizada.contains(filtroNormalizado) {
@@ -839,9 +1257,11 @@ func filtrarEstaciones() {
                     }
                 }
 
+
                 if !ordenResultados.isEmpty {
                     print("\nResultados encontrados para \"\(textoMostrado)\":")
                     print()
+
 
                     for (indice, claveEstacion) in ordenResultados.enumerated() {
                         if let nombreOficial = nombresOficiales[claveEstacion],
@@ -850,6 +1270,7 @@ func filtrarEstaciones() {
                             print("\(indice + 1). \(nombreOficial) - \(textoLineas)")
                         }
                     }
+
 
                     print(
                         "\nCantidad de estaciones encontradas: " +
@@ -866,10 +1287,13 @@ func filtrarEstaciones() {
                     print("0. Volver al menú principal")
                     print("\nSeleccione una opción:")
 
+
                     var opcionValida = false
+
 
                     while !opcionValida {
                         let opcionSinResultados = readLine() ?? "0"
+
 
                         switch opcionSinResultados {
                         case "1":
@@ -899,6 +1323,7 @@ func filtrarEstaciones() {
     }
 }
 
+
 func mostrarInformacionMetro() {
     let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
     var totalEstacionesRegistradas = 0
@@ -906,12 +1331,15 @@ func mostrarInformacionMetro() {
     var lineasPorEstacion: [String: [String]] = [:]
     var ordenEstaciones: [String] = []
 
+
     for nombreLinea in ordenLineas {
         if let estaciones = lineas[nombreLinea] {
             totalEstacionesRegistradas += estaciones.count
 
+
             for estacion in estaciones {
                 let estacionNormalizada = normalizar(estacion)
+
 
                 if lineasPorEstacion[estacionNormalizada] == nil {
                     nombresOficiales[estacionNormalizada] = estacion
@@ -925,7 +1353,9 @@ func mostrarInformacionMetro() {
         }
     }
 
+
     var estacionesConexion: [String] = []
+
 
     for claveEstacion in ordenEstaciones {
         if let lineasEncontradas = lineasPorEstacion[claveEstacion],
@@ -934,21 +1364,25 @@ func mostrarInformacionMetro() {
         }
     }
 
+
     print("----------------------------------------")
     print("    INFORMACIÓN GENERAL DEL METRO")
     print("----------------------------------------")
     print("\nCantidad de líneas: \(lineas.count)")
     print("\nEstaciones por línea:")
 
+
     for nombreLinea in ordenLineas {
         let cantidadEstaciones = lineas[nombreLinea]?.count ?? 0
         print("- \(nombreLinea): \(cantidadEstaciones)")
     }
 
+
     print("\nTotal de estaciones registradas: \(totalEstacionesRegistradas)")
     print("Estaciones únicas: \(ordenEstaciones.count)")
     print("Estaciones de conexión: \(estacionesConexion.count)")
     print("\nEstaciones de conexión:")
+
 
     for claveEstacion in estacionesConexion {
         if let nombreOficial = nombresOficiales[claveEstacion],
@@ -959,7 +1393,9 @@ func mostrarInformacionMetro() {
     }
 }
 
+
 var continuar = true
+
 
 while continuar {
     print("========================================")
@@ -974,8 +1410,10 @@ while continuar {
     print("6. Cómo llegar de una estación a otra")
     print("7. Filtrar estaciones por nombre")
     print("8. Ver información general del Metro")
+    print("9. Planificar un viaje")
     print("0. Salir")
     print("\nSeleccione una opción:")
+
 
     if let opcion = readLine() {
         switch opcion {
@@ -995,6 +1433,8 @@ while continuar {
             filtrarEstaciones()
         case "8":
             mostrarInformacionMetro()
+        case "9":
+            planificarViaje()
         case "0":
             print("Gracias por usar el sistema del Metro de Lima y Callao.")
             continuar = false

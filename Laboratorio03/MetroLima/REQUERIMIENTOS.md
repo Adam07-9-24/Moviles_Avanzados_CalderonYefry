@@ -39,3 +39,15 @@ El sistema validará los datos ingresados por el usuario y mostrará mensajes cu
 ## RF10 - Salir del sistema
 
 El usuario podrá finalizar la ejecución del programa seleccionando la opción de salir.
+
+## RF11 - Planificar un viaje
+
+El sistema permitirá seleccionar una estación de origen y una estación de destino para planificar un viaje. Mostrará la ruta a seguir, la cantidad de estaciones que faltan para llegar y las estaciones donde sea necesario realizar una conexión con otra línea. El usuario podrá iniciar el viaje y avanzar estación por estación hasta llegar a su destino.
+
+## RF12 - Gestionar tarjeta de transporte
+
+El sistema permitirá consultar el estado y saldo de una tarjeta de transporte simulada, además de realizar recargas. Al iniciar un viaje, se cobrará una tarifa fija de S/ 3.00 y se verificará que exista saldo suficiente antes de permitir el viaje.
+
+## RF13 - Administrar datos del Metro
+
+El sistema permitirá crear nuevas líneas y agregar estaciones a líneas existentes durante la ejecución del programa. Los cambios realizados existirán únicamente mientras el programa permanezca en ejecución.
