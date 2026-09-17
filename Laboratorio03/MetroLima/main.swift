@@ -1,10 +1,8 @@
 import Foundation
-
-
 // MARK: - Datos del Metro
 
 
-let lineas: [String: [String]] = [
+var lineas: [String: [String]] = [
     "Línea 1": [
         "Villa El Salvador",
         "Parque Industrial",
@@ -138,6 +136,20 @@ func normalizar(_ texto: String) -> String {
 }
 
 
+func obtenerOrdenLineas() -> [String] {
+    let lineasOriginales = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    let nombresOriginales = Set(lineasOriginales.map { normalizar($0) })
+    let lineasAdicionales = lineas.keys
+        .filter { !nombresOriginales.contains(normalizar($0)) }
+        .sorted {
+            $0.localizedStandardCompare($1) == .orderedAscending
+        }
+
+
+    return lineasOriginales.filter { lineas[$0] != nil } + lineasAdicionales
+}
+
+
 func formatearMonto(_ monto: Double) -> String {
     return String(format: "%.2f", monto)
 }
@@ -249,8 +261,174 @@ func pagarViajeConTarjeta() -> Bool {
 }
 
 
+func mostrarLineasRegistradas() {
+    let ordenLineas = obtenerOrdenLineas()
+
+
+    print("\nLÍNEAS REGISTRADAS")
+    print()
+
+
+    for (indice, nombreLinea) in ordenLineas.enumerated() {
+        let cantidadEstaciones = lineas[nombreLinea]?.count ?? 0
+        let textoEstaciones = cantidadEstaciones == 1 ? "estación" : "estaciones"
+
+
+        print(
+            "\(indice + 1). \(nombreLinea) - " +
+            "\(cantidadEstaciones) \(textoEstaciones)"
+        )
+    }
+}
+
+
+func crearNuevaLinea() {
+    print("\nIngrese el nombre de la nueva línea:")
+    let nombreIngresado = readLine() ?? ""
+    let nombreLinea = nombreIngresado.trimmingCharacters(
+        in: .whitespacesAndNewlines
+    )
+
+
+    guard !nombreLinea.isEmpty else {
+        print("\nNombre de línea no válido.")
+        return
+    }
+
+
+    let lineaExistente = lineas.keys.contains {
+        normalizar($0) == normalizar(nombreLinea)
+    }
+
+
+    guard !lineaExistente else {
+        print("\nYa existe una línea con ese nombre.")
+        return
+    }
+
+
+    lineas[nombreLinea] = []
+
+
+    print("\nLínea creada correctamente.")
+    print("Nombre: \(nombreLinea)")
+}
+
+
+func agregarEstacionALinea() {
+    let ordenLineas = obtenerOrdenLineas()
+
+
+    print()
+
+
+    for (indice, nombreLinea) in ordenLineas.enumerated() {
+        print("\(indice + 1). \(nombreLinea)")
+    }
+
+
+    print("\nSeleccione una línea:")
+    let opcionLinea = readLine() ?? ""
+
+
+    guard let numeroLinea = Int(opcionLinea),
+          numeroLinea >= 1,
+          numeroLinea <= ordenLineas.count else {
+        print("Opción de línea no válida.")
+        return
+    }
+
+
+    let nombreLinea = ordenLineas[numeroLinea - 1]
+    var estaciones = lineas[nombreLinea] ?? []
+
+
+    print("\nIngrese el nombre de la nueva estación:")
+    let estacionIngresada = readLine() ?? ""
+    let nombreEstacion = estacionIngresada.trimmingCharacters(
+        in: .whitespacesAndNewlines
+    )
+
+
+    guard !nombreEstacion.isEmpty else {
+        print("\nNombre de estación no válido.")
+        return
+    }
+
+
+    let estacionExistente = estaciones.contains {
+        normalizar($0) == normalizar(nombreEstacion)
+    }
+
+
+    guard !estacionExistente else {
+        print("\nYa existe una estación con ese nombre en la línea.")
+        return
+    }
+
+
+    let posicionMaxima = estaciones.count + 1
+    print("\nIngrese la posición de la nueva estación")
+    print("(1 a \(posicionMaxima)):")
+    let posicionIngresada = readLine() ?? ""
+
+
+    guard let posicion = Int(posicionIngresada),
+          posicion >= 1,
+          posicion <= posicionMaxima else {
+        print("\nPosición no válida.")
+        return
+    }
+
+
+    estaciones.insert(nombreEstacion, at: posicion - 1)
+    lineas[nombreLinea] = estaciones
+
+
+    print("\nEstación agregada correctamente.")
+    print("Estación: \(nombreEstacion)")
+    print("Línea: \(nombreLinea)")
+    print("Posición: \(posicion)")
+}
+
+
+func administrarDatosMetro() {
+    var continuarAdministracion = true
+
+
+    while continuarAdministracion {
+        print("----------------------------------------")
+        print("      ADMINISTRAR DATOS DEL METRO")
+        print("----------------------------------------")
+        print()
+        print("1. Ver líneas existentes")
+        print("2. Crear una nueva línea")
+        print("3. Agregar una estación a una línea")
+        print("0. Volver al menú principal")
+        print("\nSeleccione una opción:")
+
+
+        let opcion = readLine() ?? "0"
+
+
+        switch opcion {
+        case "1":
+            mostrarLineasRegistradas()
+        case "2":
+            crearNuevaLinea()
+        case "3":
+            agregarEstacionALinea()
+        case "0":
+            continuarAdministracion = false
+        default:
+            print("Opción no válida. Intente nuevamente.")
+        }
+    }
+}
+
+
 func mostrarLineas() {
-    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    let ordenLineas = obtenerOrdenLineas()
 
 
     print("========================================")
@@ -266,7 +444,7 @@ func mostrarLineas() {
 
 
 func mostrarEstacionesPorLinea() {
-    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    let ordenLineas = obtenerOrdenLineas()
 
 
     print("----------------------------------------")
@@ -282,26 +460,19 @@ func mostrarEstacionesPorLinea() {
 
     print("\nSeleccione una línea:")
     let opcion = readLine() ?? ""
-    let nombreLinea: String
-
-
-    switch opcion {
-    case "1":
-        nombreLinea = "Línea 1"
-    case "2":
-        nombreLinea = "Línea 2"
-    case "3":
-        nombreLinea = "Línea 3"
-    case "4":
-        nombreLinea = "Línea 4"
-    default:
+    guard let numeroLinea = Int(opcion),
+          numeroLinea >= 1,
+          numeroLinea <= ordenLineas.count else {
         print("Opción de línea no válida.")
         return
     }
 
 
+    let nombreLinea = ordenLineas[numeroLinea - 1]
+
+
     if let estaciones = lineas[nombreLinea] {
-        print("\nLÍNEA \(opcion)")
+        print("\n\(nombreLinea.uppercased())")
         print("Cantidad de estaciones: \(estaciones.count)")
         print()
 
@@ -314,7 +485,7 @@ func mostrarEstacionesPorLinea() {
 
 
 func buscarEstacion() {
-    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    let ordenLineas = obtenerOrdenLineas()
     var continuarBusqueda = true
 
 
@@ -421,7 +592,7 @@ func buscarEstacion() {
 
 
 func mostrarEstacionesCercanas() {
-    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    let ordenLineas = obtenerOrdenLineas()
     var continuarConsulta = true
 
 
@@ -569,7 +740,7 @@ func mostrarEstacionesCercanas() {
 
 
 func mostrarConexionesEstacion() {
-    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    let ordenLineas = obtenerOrdenLineas()
     var continuarConsulta = true
 
 
@@ -699,7 +870,7 @@ func obtenerNombreEstacion(_ nodo: NodoRuta) -> String {
 
 
 func calcularRuta(desde nombreOrigen: String, hasta nombreDestino: String) -> [NodoRuta] {
-    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    let ordenLineas = obtenerOrdenLineas()
     let origenNormalizado = normalizar(nombreOrigen)
     let destinoNormalizado = normalizar(nombreDestino)
     var nodosOrigen: [NodoRuta] = []
@@ -828,7 +999,7 @@ func calcularRuta(desde nombreOrigen: String, hasta nombreDestino: String) -> [N
 
 
 func mostrarRuta() {
-    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    let ordenLineas = obtenerOrdenLineas()
     var continuarConsulta = true
 
 
@@ -1139,7 +1310,7 @@ func simularViaje(ruta: [NodoRuta], destino: String) {
 
 
 func planificarViaje() {
-    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    let ordenLineas = obtenerOrdenLineas()
     var continuarPlanificacion = true
 
 
@@ -1320,7 +1491,7 @@ func planificarViaje() {
 
 
 func filtrarEstaciones() {
-    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    let ordenLineas = obtenerOrdenLineas()
     var continuarFiltro = true
 
 
@@ -1447,7 +1618,7 @@ func filtrarEstaciones() {
 
 
 func mostrarInformacionMetro() {
-    let ordenLineas = ["Línea 1", "Línea 2", "Línea 3", "Línea 4"]
+    let ordenLineas = obtenerOrdenLineas()
     var totalEstacionesRegistradas = 0
     var nombresOficiales: [String: String] = [:]
     var lineasPorEstacion: [String: [String]] = [:]
@@ -1534,6 +1705,7 @@ while continuar {
     print("8. Ver información general del Metro")
     print("9. Planificar un viaje")
     print("10. Gestionar tarjeta de transporte")
+    print("11. Administrar datos del Metro")
     print("0. Salir")
     print("\nSeleccione una opción:")
 
@@ -1560,6 +1732,8 @@ while continuar {
             planificarViaje()
         case "10":
             gestionarTarjeta()
+        case "11":
+            administrarDatosMetro()
         case "0":
             print("Gracias por usar el sistema del Metro de Lima y Callao.")
             continuar = false
