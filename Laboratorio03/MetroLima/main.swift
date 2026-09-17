@@ -1,5 +1,8 @@
 import Foundation
+
+
 // MARK: - Datos del Metro
+
 
 let lineas: [String: [String]] = [
     "Línea 1": [
@@ -122,11 +125,127 @@ let lineas: [String: [String]] = [
 ]
 
 
+var saldoTarjeta: Double = 0.0
+let estadoTarjeta = "Activa"
+let tarifaViaje: Double = 3.0
+
+
 func normalizar(_ texto: String) -> String {
     return texto
         .trimmingCharacters(in: .whitespacesAndNewlines)
         .folding(options: .diacriticInsensitive, locale: .current)
         .lowercased()
+}
+
+
+func formatearMonto(_ monto: Double) -> String {
+    return String(format: "%.2f", monto)
+}
+
+
+func recargarSaldoTarjeta() {
+    print("\nIngrese el monto a recargar:")
+    let montoIngresado = readLine() ?? ""
+    let textoMonto = montoIngresado.trimmingCharacters(
+        in: .whitespacesAndNewlines
+    )
+
+
+    guard let monto = Double(textoMonto), monto.isFinite, monto > 0 else {
+        print("\nMonto no válido.")
+        return
+    }
+
+
+    let saldoAnterior = saldoTarjeta
+    saldoTarjeta += monto
+
+
+    print("\nRecarga realizada correctamente.")
+    print("Saldo anterior: S/ \(formatearMonto(saldoAnterior))")
+    print("Saldo recargado: S/ \(formatearMonto(monto))")
+    print("Nuevo saldo: S/ \(formatearMonto(saldoTarjeta))")
+}
+
+
+func gestionarTarjeta() {
+    var continuarGestion = true
+
+
+    while continuarGestion {
+        print("----------------------------------------")
+        print("       GESTIONAR TARJETA")
+        print("----------------------------------------")
+        print()
+        print("1. Ver estado de la tarjeta")
+        print("2. Recargar saldo")
+        print("0. Volver al menú principal")
+        print("\nSeleccione una opción:")
+
+
+        let opcion = readLine() ?? "0"
+
+
+        switch opcion {
+        case "1":
+            print("\nEstado de la tarjeta: \(estadoTarjeta)")
+            print("Saldo actual: S/ \(formatearMonto(saldoTarjeta))")
+            print("Tarifa por viaje: S/ \(formatearMonto(tarifaViaje))")
+        case "2":
+            recargarSaldoTarjeta()
+        case "0":
+            continuarGestion = false
+        default:
+            print("Opción no válida. Intente nuevamente.")
+        }
+    }
+}
+
+
+func pagarViajeConTarjeta() -> Bool {
+    print("\n----------------------------------------")
+    print("           PAGO DEL VIAJE")
+    print("----------------------------------------")
+    print()
+    print("Acerque su tarjeta de transporte...")
+    print("Presione ENTER para continuar.")
+    _ = readLine()
+
+
+    while saldoTarjeta < tarifaViaje {
+        print("\nSaldo insuficiente.")
+        print("Saldo actual: S/ \(formatearMonto(saldoTarjeta))")
+        print("Tarifa: S/ \(formatearMonto(tarifaViaje))")
+        print()
+        print("1. Recargar tarjeta")
+        print("0. Cancelar viaje")
+        print("\nSeleccione una opción:")
+
+
+        let opcion = readLine() ?? "0"
+
+
+        switch opcion {
+        case "1":
+            recargarSaldoTarjeta()
+        case "0":
+            return false
+        default:
+            print("Opción no válida. Intente nuevamente.")
+        }
+    }
+
+
+    print("\nSaldo actual: S/ \(formatearMonto(saldoTarjeta))")
+    print("Tarifa: S/ \(formatearMonto(tarifaViaje))")
+
+
+    saldoTarjeta -= tarifaViaje
+
+
+    print("\nPago realizado correctamente.")
+    print("Nuevo saldo: S/ \(formatearMonto(saldoTarjeta))")
+    return true
 }
 
 
@@ -1177,8 +1296,11 @@ func planificarViaje() {
 
                 switch opcionViaje {
                 case "1":
-                    // RF12: aquí se verificará y cobrará la tarifa de S/ 3.00.
-                    simularViaje(ruta: ruta, destino: nombreDestinoOficial)
+                    if pagarViajeConTarjeta() {
+                        simularViaje(ruta: ruta, destino: nombreDestinoOficial)
+                    }
+
+
                     seleccionarAccion = false
                 case "0":
                     seleccionarAccion = false
@@ -1411,6 +1533,7 @@ while continuar {
     print("7. Filtrar estaciones por nombre")
     print("8. Ver información general del Metro")
     print("9. Planificar un viaje")
+    print("10. Gestionar tarjeta de transporte")
     print("0. Salir")
     print("\nSeleccione una opción:")
 
@@ -1435,6 +1558,8 @@ while continuar {
             mostrarInformacionMetro()
         case "9":
             planificarViaje()
+        case "10":
+            gestionarTarjeta()
         case "0":
             print("Gracias por usar el sistema del Metro de Lima y Callao.")
             continuar = false
