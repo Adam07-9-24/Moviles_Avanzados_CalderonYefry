@@ -4,6 +4,7 @@ import SwiftUI
 struct ContentView: View {
 
     // MARK: - Datos del formulario
+
     @State private var sueldo = ""
     @State private var dias = "30"
     @State private var tieneHijos = false
@@ -14,6 +15,7 @@ struct ContentView: View {
     @State private var adelantos = "0"
 
     // MARK: - Resultado del cálculo
+
     @State private var resultado: ResultadoBoleta?
     @State private var mensajeError = ""
 
@@ -34,6 +36,7 @@ struct ContentView: View {
                 Button(action: calcular) {
                     HStack {
                         Image(systemName: "calculator")
+
                         Text("CALCULAR BOLETA")
                             .fontWeight(.bold)
                     }
@@ -43,13 +46,24 @@ struct ContentView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(azul)
 
+                // Mensaje de validación
                 if !mensajeError.isEmpty {
-                    Text(mensajeError)
-                        .foregroundStyle(.red)
-                        .font(.subheadline)
-                        .padding(12)
+                    HStack(alignment: .top, spacing: 10) {
+                        Image(systemName: "exclamationmark.circle.fill")
+
+                        Text(mensajeError)
+                            .font(.subheadline)
+                    }
+                    .foregroundStyle(.red)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(14)
+                    .background(
+                        Color.red.opacity(0.08),
+                        in: RoundedRectangle(cornerRadius: 12)
+                    )
                 }
 
+                // Mostrar boleta solo si el cálculo fue válido
                 if let resultado {
                     vistaBoleta(resultado)
                 }
@@ -62,9 +76,20 @@ struct ContentView: View {
             .padding(20)
         }
         .background(Color(uiColor: .systemGroupedBackground))
+
+        // Invalidar resultados al modificar cualquier dato
+        .onChange(of: sueldo) { _, _ in limpiarResultado() }
+        .onChange(of: dias) { _, _ in limpiarResultado() }
+        .onChange(of: tieneHijos) { _, _ in limpiarResultado() }
+        .onChange(of: pension) { _, _ in limpiarResultado() }
+        .onChange(of: afpSeleccionada) { _, _ in limpiarResultado() }
+        .onChange(of: horas25) { _, _ in limpiarResultado() }
+        .onChange(of: horas35) { _, _ in limpiarResultado() }
+        .onChange(of: adelantos) { _, _ in limpiarResultado() }
     }
 
     // MARK: - Encabezado
+
     private var encabezado: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 10) {
@@ -88,6 +113,7 @@ struct ContentView: View {
     }
 
     // MARK: - Formulario
+
     private var formulario: some View {
         VStack(alignment: .leading, spacing: 18) {
 
@@ -176,6 +202,7 @@ struct ContentView: View {
     }
 
     // MARK: - Campo reutilizable
+
     private func campo(
         _ titulo: String,
         texto: Binding<String>,
@@ -202,7 +229,8 @@ struct ContentView: View {
         }
     }
 
-    // MARK: - Título de sección
+    // MARK: - Títulos de sección
+
     private func tituloSeccion(
         _ titulo: String,
         icono: String
@@ -218,6 +246,7 @@ struct ContentView: View {
     }
 
     // MARK: - Boleta de resultados
+
     private func vistaBoleta(
         _ datos: ResultadoBoleta
     ) -> some View {
@@ -297,7 +326,8 @@ struct ContentView: View {
         )
     }
 
-    // MARK: - Bloques de conceptos
+    // MARK: - Bloques de la boleta
+
     private func bloque(
         _ titulo: String,
         icono: String,
@@ -316,6 +346,7 @@ struct ContentView: View {
     }
 
     // MARK: - Fila de resultados
+
     private func fila(
         _ nombre: String,
         monto: Decimal,
@@ -345,6 +376,7 @@ struct ContentView: View {
     }
 
     // MARK: - Formato de moneda
+
     private func moneda(_ monto: Decimal) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -356,7 +388,8 @@ struct ContentView: View {
         ) ?? "S/ 0.00"
     }
 
-    // MARK: - Convertir texto a número
+    // MARK: - Conversión de números
+
     private func convertir(_ texto: String) -> Decimal? {
         let normalizado = texto
             .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -372,20 +405,93 @@ struct ContentView: View {
         )
     }
 
-    // MARK: - Ejecutar cálculo
+    // MARK: - Limpiar resultados anteriores
+
+    private func limpiarResultado() {
+        resultado = nil
+        mensajeError = ""
+    }
+
+    // MARK: - Validaciones y cálculo
+
     private func calcular() {
+
         resultado = nil
         mensajeError = ""
 
-        guard let sueldoValor = convertir(sueldo),
-              let diasValor = Int(dias),
-              let horas25Valor = convertir(horas25),
-              let horas35Valor = convertir(horas35),
-              let adelantosValor = convertir(adelantos) else {
-            mensajeError = "Completa los campos con números válidos."
+        // 1. Verificar campos obligatorios
+        let campos = [sueldo, dias, horas25, horas35, adelantos]
+
+        if campos.contains(where: {
+            $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }) {
+            mensajeError = "Todos los campos numéricos son obligatorios."
             return
         }
 
+        // 2. Validar sueldo básico
+        guard let sueldoValor = convertir(sueldo) else {
+            mensajeError = "Ingresa un sueldo básico válido."
+            return
+        }
+
+        guard sueldoValor > 0 else {
+            mensajeError = "El sueldo básico debe ser mayor que cero."
+            return
+        }
+
+        // 3. Validar días laborados
+        guard let diasValor = Int(dias) else {
+            mensajeError = "Los días laborados deben ser un número entero."
+            return
+        }
+
+        guard (1...30).contains(diasValor) else {
+            mensajeError = "Los días laborados deben estar entre 1 y 30."
+            return
+        }
+
+        // 4. Validar horas extras al 25%
+        guard let horas25Valor = convertir(horas25) else {
+            mensajeError = "Ingresa un valor válido para las horas extras al 25%."
+            return
+        }
+
+        guard horas25Valor >= 0 else {
+            mensajeError = "Las horas extras al 25% no pueden ser negativas."
+            return
+        }
+
+        // 5. Validar horas extras al 35%
+        guard let horas35Valor = convertir(horas35) else {
+            mensajeError = "Ingresa un valor válido para las horas extras al 35%."
+            return
+        }
+
+        guard horas35Valor >= 0 else {
+            mensajeError = "Las horas extras al 35% no pueden ser negativas."
+            return
+        }
+
+        // 6. Validar adelantos
+        guard let adelantosValor = convertir(adelantos) else {
+            mensajeError = "Ingresa un monto válido para los adelantos."
+            return
+        }
+
+        guard adelantosValor >= 0 else {
+            mensajeError = "Los adelantos no pueden ser negativos."
+            return
+        }
+
+        // 7. Validar AFP
+        if pension == .afp &&
+            Parametros.tasasAFP[afpSeleccionada] == nil {
+            mensajeError = "Selecciona una AFP válida."
+            return
+        }
+
+        // 8. Crear datos del trabajador
         let trabajador = DatosTrabajador(
             sueldoBasico: sueldoValor,
             diasLaborados: diasValor,
@@ -397,6 +503,7 @@ struct ContentView: View {
             adelantos: adelantosValor
         )
 
+        // 9. Ejecutar cálculo
         do {
             resultado = try calculadora.calcular(trabajador)
         } catch {
