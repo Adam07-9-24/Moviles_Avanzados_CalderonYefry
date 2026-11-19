@@ -1,0 +1,853 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23000" targetRuntime="iOS.CocoaTouch" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="mgY-Z2-dV9">
+    <device id="retina6_12" orientation="portrait" appearance="light" />
+    <dependencies>
+        <deployment identifier="iOS" />
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23000" />
+        <capability name="Safe area layout guides" minToolsVersion="9.0" />
+    </dependencies>
+    <scenes>
+        <scene sceneID="zJw-Jl-zd9">
+            <objects>
+                <viewController storyboardIdentifier="LoginController" id="vZC-Yg-6vw" customClass="LoginController" customModule="Ventas" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="pHi-2U-iDl">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852" />
+                        <subviews>
+                            <scrollView clipsSubviews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BEP-oi-SP0">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759" />
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Qak-T9-2l3">
+                                        <rect key="frame" x="24" y="24" width="345" height="344.0" />
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Ventas" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="BxI-7E-vQP" textAlignment="center">
+                                                <rect key="frame" x="0" y="0" width="345" height="36" />
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="27" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.2" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Inicia sesión para continuar" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="iK4-iV-O95" textAlignment="center">
+                                                <rect key="frame" x="0" y="48.0" width="345" height="20" />
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.2" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" borderStyle="roundedRect" placeholder="Usuario" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="GCZ-9x-1Hv">
+                                                <rect key="frame" x="0" y="80.0" width="345" height="50" />
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="CHi-zc-ffi" />
+                                                </constraints>
+                                                <textInputTraits autocapitalizationType="none" autocorrectionType="no" secureTextEntry="NO" />
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" borderStyle="roundedRect" placeholder="Contraseña" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iV1-aa-uMM">
+                                                <rect key="frame" x="0" y="142.0" width="345" height="50" />
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="i3H-xx-rJm" />
+                                                </constraints>
+                                                <textInputTraits autocapitalizationType="none" autocorrectionType="no" secureTextEntry="YES" />
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" text=" " numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="vsf-rd-uWv">
+                                                <rect key="frame" x="0" y="204.0" width="345" height="20" />
+                                                <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                <color key="textColor" red="1" green="0.23" blue="0.19" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" buttonType="system" translatesAutoresizingMaskIntoConstraints="NO" id="wZc-Yv-Pyp">
+                                                <rect key="frame" x="0" y="236.0" width="345" height="48" />
+                                                <state key="normal" title="Ingresar">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" />
+                                                </state>
+                                                <connections>
+                                                    <action selector="signIn:" destination="vZC-Yg-6vw" eventType="touchUpInside" id="svN-OX-Uow" />
+                                                </connections>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="bma-io-akf" />
+                                                </constraints>
+                                                <color key="backgroundColor" red="0.035" green="0.39" blue="0.96" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" buttonType="system" translatesAutoresizingMaskIntoConstraints="NO" id="qSW-W7-6Vn">
+                                                <rect key="frame" x="0" y="296.0" width="345" height="48" />
+                                                <state key="normal" title="¿Primera vez? Crear cuenta">
+                                                    <color key="titleColor" red="0.01" green="0.48" blue="0.44" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                </state>
+                                                <connections>
+                                                    <action selector="createAccount:" destination="vZC-Yg-6vw" eventType="touchUpInside" id="9Xt-Xp-RcP" />
+                                                </connections>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="idj-Ow-f95" />
+                                                </constraints>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Qak-T9-2l3" firstAttribute="top" secondItem="BEP-oi-SP0" secondAttribute="top" constant="24" id="cGW-0D-Z7d" />
+                                    <constraint firstItem="Qak-T9-2l3" firstAttribute="bottom" secondItem="BEP-oi-SP0" secondAttribute="bottom" constant="-24" id="Z82-xE-rNK" />
+                                    <constraint firstItem="Qak-T9-2l3" firstAttribute="leading" secondItem="BEP-oi-SP0" secondAttribute="leading" constant="24" id="SK9-Rl-sZ9" />
+                                    <constraint firstItem="Qak-T9-2l3" firstAttribute="trailing" secondItem="BEP-oi-SP0" secondAttribute="trailing" constant="-24" id="nmT-yJ-xXO" />
+                                    <constraint firstItem="Qak-T9-2l3" firstAttribute="width" secondItem="BEP-oi-SP0" secondAttribute="width" constant="-48" id="aW5-pf-zP8" />
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="28v-IS-lhK" />
+                        <color key="backgroundColor" red="0.95" green="0.95" blue="0.97" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                        <constraints>
+                            <constraint firstItem="BEP-oi-SP0" firstAttribute="top" secondItem="28v-IS-lhK" secondAttribute="top" id="j2z-cb-wRp" />
+                            <constraint firstItem="BEP-oi-SP0" firstAttribute="bottom" secondItem="28v-IS-lhK" secondAttribute="bottom" id="1S7-jP-XUa" />
+                            <constraint firstItem="BEP-oi-SP0" firstAttribute="leading" secondItem="28v-IS-lhK" secondAttribute="leading" id="820-Fk-psR" />
+                            <constraint firstItem="BEP-oi-SP0" firstAttribute="trailing" secondItem="28v-IS-lhK" secondAttribute="trailing" id="VAf-di-La5" />
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="user" destination="GCZ-9x-1Hv" id="PqN-Wu-E4C" />
+                        <outlet property="password" destination="iV1-aa-uMM" id="JIQ-jk-aPQ" />
+                        <outlet property="errorLabel" destination="vsf-rd-uWv" id="0Yb-q1-mDa" />
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8YT-mT-Yw6" userLabel="First Responder" sceneMemberID="firstResponder" />
+            </objects>
+            <point key="canvasLocation" x="0" y="0" />
+        </scene>
+        <scene sceneID="6cp-nP-ym3">
+            <objects>
+                <viewController storyboardIdentifier="RegisterController" id="M5K-Vk-U27" customClass="RegisterController" customModule="Ventas" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vrw-9x-sRz">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852" />
+                        <subviews>
+                            <scrollView clipsSubviews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YUM-7I-rKV">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759" />
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="2wi-ZA-gyx">
+                                        <rect key="frame" x="24" y="24" width="345" height="436.0" />
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" borderStyle="roundedRect" placeholder="Nombre completo" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gXk-DW-M2Z">
+                                                <rect key="frame" x="0" y="0" width="345" height="50" />
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="w4b-8Z-3dS" />
+                                                </constraints>
+                                                <textInputTraits autocapitalizationType="none" autocorrectionType="no" secureTextEntry="NO" />
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" borderStyle="roundedRect" placeholder="Usuario" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sI1-ih-nV6">
+                                                <rect key="frame" x="0" y="62.0" width="345" height="50" />
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="Xuk-WK-17R" />
+                                                </constraints>
+                                                <textInputTraits autocapitalizationType="none" autocorrectionType="no" secureTextEntry="NO" />
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" borderStyle="roundedRect" placeholder="Contraseña (mínimo 6 caracteres)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EkB-Re-iNL">
+                                                <rect key="frame" x="0" y="124.0" width="345" height="50" />
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="5ze-7L-nIw" />
+                                                </constraints>
+                                                <textInputTraits autocapitalizationType="none" autocorrectionType="no" secureTextEntry="YES" />
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </textField>
+                                            <textField opaque="NO" contentMode="scaleToFill" borderStyle="roundedRect" placeholder="Confirmar contraseña" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="71D-RE-WJg">
+                                                <rect key="frame" x="0" y="186.0" width="345" height="50" />
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="TlV-zK-Uke" />
+                                                </constraints>
+                                                <textInputTraits autocapitalizationType="none" autocorrectionType="no" secureTextEntry="YES" />
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="TU ROL" textAlignment="natural" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="581-yB-ThX">
+                                                <rect key="frame" x="0" y="248.0" width="345" height="20" />
+                                                <fontDescription key="fontDescription" type="system" pointSize="12" />
+                                                <color key="textColor" red="0.39" green="0.45" blue="0.51" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="MDW-ON-I2k">
+                                                <rect key="frame" x="0" y="280.0" width="345" height="32" />
+                                                <segments>
+                                                    <segment title="Vendedor" />
+                                                    <segment title="Supervisor" />
+                                                </segments>
+                                            </segmentedControl>
+                                            <label opaque="NO" userInteractionEnabled="NO" text=" " numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="EhO-p3-77c">
+                                                <rect key="frame" x="0" y="324.0" width="345" height="20" />
+                                                <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                <color key="textColor" red="1" green="0.23" blue="0.19" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" buttonType="system" translatesAutoresizingMaskIntoConstraints="NO" id="vuu-ws-bDV">
+                                                <rect key="frame" x="0" y="356.0" width="345" height="48" />
+                                                <state key="normal" title="Registrarme">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" />
+                                                </state>
+                                                <connections>
+                                                    <action selector="register:" destination="M5K-Vk-U27" eventType="touchUpInside" id="1hB-Bh-Wa1" />
+                                                </connections>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="kQj-UV-xMP" />
+                                                </constraints>
+                                                <color key="backgroundColor" red="0.035" green="0.39" blue="0.96" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Al registrarte entrarás directamente a la app con las pestañas de tu rol." textAlignment="center" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="5uQ-bU-gp4">
+                                                <rect key="frame" x="0" y="416.0" width="345" height="20" />
+                                                <fontDescription key="fontDescription" type="system" pointSize="12" />
+                                                <color key="textColor" red="0.39" green="0.45" blue="0.51" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="2wi-ZA-gyx" firstAttribute="top" secondItem="YUM-7I-rKV" secondAttribute="top" constant="24" id="B8u-pw-5sz" />
+                                    <constraint firstItem="2wi-ZA-gyx" firstAttribute="bottom" secondItem="YUM-7I-rKV" secondAttribute="bottom" constant="-24" id="RqB-6K-K6s" />
+                                    <constraint firstItem="2wi-ZA-gyx" firstAttribute="leading" secondItem="YUM-7I-rKV" secondAttribute="leading" constant="24" id="eQH-B6-l03" />
+                                    <constraint firstItem="2wi-ZA-gyx" firstAttribute="trailing" secondItem="YUM-7I-rKV" secondAttribute="trailing" constant="-24" id="p5a-40-iTe" />
+                                    <constraint firstItem="2wi-ZA-gyx" firstAttribute="width" secondItem="YUM-7I-rKV" secondAttribute="width" constant="-48" id="PpA-FE-jgG" />
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ab8-m1-HbG" />
+                        <color key="backgroundColor" red="0.95" green="0.95" blue="0.97" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                        <constraints>
+                            <constraint firstItem="YUM-7I-rKV" firstAttribute="top" secondItem="ab8-m1-HbG" secondAttribute="top" id="cvQ-ll-TFH" />
+                            <constraint firstItem="YUM-7I-rKV" firstAttribute="bottom" secondItem="ab8-m1-HbG" secondAttribute="bottom" id="phn-XA-FFm" />
+                            <constraint firstItem="YUM-7I-rKV" firstAttribute="leading" secondItem="ab8-m1-HbG" secondAttribute="leading" id="7vC-ZO-EAX" />
+                            <constraint firstItem="YUM-7I-rKV" firstAttribute="trailing" secondItem="ab8-m1-HbG" secondAttribute="trailing" id="3HT-5T-oNZ" />
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="name" destination="gXk-DW-M2Z" id="EYf-kM-vLw" />
+                        <outlet property="user" destination="sI1-ih-nV6" id="TgC-9L-Jag" />
+                        <outlet property="password" destination="EkB-Re-iNL" id="Tdv-Rc-9pz" />
+                        <outlet property="confirm" destination="71D-RE-WJg" id="sel-C5-iaS" />
+                        <outlet property="role" destination="MDW-ON-I2k" id="733-cW-hpy" />
+                        <outlet property="errorLabel" destination="EhO-p3-77c" id="Coe-J4-N22" />
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SQa-1G-g11" userLabel="First Responder" sceneMemberID="firstResponder" />
+            </objects>
+            <point key="canvasLocation" x="520" y="0" />
+        </scene>
+        <scene sceneID="SlH-T2-xoX">
+            <objects>
+                <viewController storyboardIdentifier="AccountController" id="5fb-Si-iPW" customClass="AccountController" customModule="Ventas" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="19J-a2-sBY">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852" />
+                        <subviews>
+                            <scrollView clipsSubviews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YZF-wP-qzo">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759" />
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="o29-Yb-Uy2">
+                                        <rect key="frame" x="24" y="24" width="345" height="308.0" />
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Mi cuenta" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="dce-Yw-N6I">
+                                                <rect key="frame" x="0" y="0" width="345" height="40" />
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Nombre" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="D7l-ML-gQk">
+                                                <rect key="frame" x="0" y="52.0" width="345" height="30" />
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="@usuario" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ttd-qi-tzR">
+                                                <rect key="frame" x="0" y="94.0" width="345" height="22" />
+                                                <fontDescription key="fontDescription" type="system" pointSize="16" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Rol" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="D4j-Ll-NYU">
+                                                <rect key="frame" x="0" y="128.0" width="345" height="22" />
+                                                <fontDescription key="fontDescription" type="system" pointSize="16" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="INFORMACIÓN ACADÉMICA" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ff7-Mg-KNP">
+                                                <rect key="frame" x="0" y="162.0" width="345" height="20" />
+                                                <fontDescription key="fontDescription" type="system" pointSize="12" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Gestión de ventas" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="bJa-US-oh5">
+                                                <rect key="frame" x="0" y="194.0" width="345" height="22" />
+                                                <fontDescription key="fontDescription" type="system" pointSize="16" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Cuenta de usuario" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="Vb7-1M-VG5">
+                                                <rect key="frame" x="0" y="228.0" width="345" height="20" />
+                                                <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <button opaque="NO" buttonType="system" translatesAutoresizingMaskIntoConstraints="NO" id="4g4-3w-5Qk">
+                                                <rect key="frame" x="0" y="260.0" width="345" height="48" />
+                                                <state key="normal" title="Cerrar sesión">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" />
+                                                </state>
+                                                <color key="backgroundColor" red="0.035" green="0.39" blue="0.96" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="LTO-zw-08m" />
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="signOut:" destination="5fb-Si-iPW" eventType="touchUpInside" id="A97-L4-cuF" />
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="o29-Yb-Uy2" firstAttribute="top" secondItem="YZF-wP-qzo" secondAttribute="top" constant="24" id="5X4-AT-k1A" />
+                                    <constraint firstItem="o29-Yb-Uy2" firstAttribute="bottom" secondItem="YZF-wP-qzo" secondAttribute="bottom" constant="-24" id="OhJ-mG-U7Z" />
+                                    <constraint firstItem="o29-Yb-Uy2" firstAttribute="leading" secondItem="YZF-wP-qzo" secondAttribute="leading" constant="24" id="D8O-af-M0c" />
+                                    <constraint firstItem="o29-Yb-Uy2" firstAttribute="trailing" secondItem="YZF-wP-qzo" secondAttribute="trailing" constant="-24" id="Vzp-7w-uf7" />
+                                    <constraint firstItem="o29-Yb-Uy2" firstAttribute="width" secondItem="YZF-wP-qzo" secondAttribute="width" constant="-48" id="CGI-Io-W0u" />
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="y0E-2c-qcd" />
+                        <color key="backgroundColor" red="0.95" green="0.95" blue="0.97" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                        <constraints>
+                            <constraint firstItem="YZF-wP-qzo" firstAttribute="top" secondItem="y0E-2c-qcd" secondAttribute="top" id="SfJ-Ob-Sh1" />
+                            <constraint firstItem="YZF-wP-qzo" firstAttribute="bottom" secondItem="y0E-2c-qcd" secondAttribute="bottom" id="s3L-tC-etB" />
+                            <constraint firstItem="YZF-wP-qzo" firstAttribute="leading" secondItem="y0E-2c-qcd" secondAttribute="leading" id="l2l-8G-bjq" />
+                            <constraint firstItem="YZF-wP-qzo" firstAttribute="trailing" secondItem="y0E-2c-qcd" secondAttribute="trailing" id="RHD-aH-6Us" />
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="nameLabel" destination="D7l-ML-gQk" id="gCR-VQ-uqE" />
+                        <outlet property="userLabel" destination="Ttd-qi-tzR" id="XMy-mE-1lY" />
+                        <outlet property="roleLabel" destination="D4j-Ll-NYU" id="7KZ-fu-SvU" />
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LnF-Cs-Enn" userLabel="First Responder" sceneMemberID="firstResponder" />
+            </objects>
+            <point key="canvasLocation" x="1040" y="0" />
+        </scene>
+        <scene sceneID="DzY-wA-bQe">
+            <objects>
+                <viewController storyboardIdentifier="SaleController" id="bYs-iW-8uk" customClass="SaleController" customModule="Ventas" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bk1-Pk-3Ii">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852" />
+                        <subviews>
+                            <scrollView clipsSubviews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lnj-zM-ozF">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759" />
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="mX1-t6-LCU">
+                                        <rect key="frame" x="24" y="24" width="345" height="433.0" />
+                                        <subviews>
+                                            <stackView opaque="NO" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="fNv-xb-OUG">
+                                                <rect key="frame" x="0" y="0" width="345" height="70.0" />
+                                                <color key="backgroundColor" red="0.9" green="0.93" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" text="VENDEDOR" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="MQa-hx-UH3">
+                                                        <rect key="frame" x="0" y="0" width="345" height="20" />
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12" />
+                                                        <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" text="Vendedor" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="ESY-zg-3Oz">
+                                                        <rect key="frame" x="0" y="24.0" width="345" height="22" />
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16" />
+                                                        <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" text="La venta se registrará a tu nombre" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="xtZ-ak-FZB">
+                                                        <rect key="frame" x="0" y="50.0" width="345" height="20" />
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12" />
+                                                        <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" axis="horizontal" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="XXT-eD-26D" alignment="center" distribution="fill">
+                                                <rect key="frame" x="0" y="82.0" width="345" height="48" />
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" text="CLIENTE" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="uT2-SG-ivy" horizontalHuggingPriority="251">
+                                                        <rect key="frame" x="0" y="0" width="166.5" height="20" />
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12" />
+                                                        <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                    </label>
+                                                    <button opaque="NO" buttonType="system" translatesAutoresizingMaskIntoConstraints="NO" id="xwr-U3-FY4">
+                                                        <rect key="frame" x="178.5" y="0" width="166.5" height="48" />
+                                                        <state key="normal" title="Selecciona un cliente ▾" />
+                                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="44" id="tkp-3H-UfZ" />
+                                                        </constraints>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" axis="horizontal" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="H9S-ez-hYI" alignment="center" distribution="fill">
+                                                <rect key="frame" x="0" y="142.0" width="345" height="48" />
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" text="PRODUCTO" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="8pB-Ro-50T" horizontalHuggingPriority="251">
+                                                        <rect key="frame" x="0" y="0" width="166.5" height="20" />
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12" />
+                                                        <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                    </label>
+                                                    <button opaque="NO" buttonType="system" translatesAutoresizingMaskIntoConstraints="NO" id="JgX-BD-3EK">
+                                                        <rect key="frame" x="178.5" y="0" width="166.5" height="48" />
+                                                        <state key="normal" title="Selecciona un producto ▾" />
+                                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="44" id="1sM-sF-Uit" />
+                                                        </constraints>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" axis="horizontal" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Q5j-Wd-yM8" alignment="center" distribution="fill">
+                                                <rect key="frame" x="0" y="202.0" width="345" height="32" />
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" text="Stock disponible · 0" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ad5-Gh-3nS">
+                                                        <rect key="frame" x="0" y="0" width="109.67" height="20" />
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                        <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" text="Cantidad · 1" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="pbm-RS-Kn1">
+                                                        <rect key="frame" x="117.67" y="0" width="109.67" height="22" />
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16" />
+                                                        <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                    </label>
+                                                    <stepper opaque="NO" contentMode="scaleToFill" value="1" minimumValue="1" maximumValue="1000000" translatesAutoresizingMaskIntoConstraints="NO" id="5gI-vw-hEv">
+                                                        <rect key="frame" x="235.33" y="0" width="109.67" height="32" />
+                                                    </stepper>
+                                                </subviews>
+                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="RESUMEN DE LA VENTA" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="4pe-tA-Y0o">
+                                                <rect key="frame" x="0" y="246.0" width="345" height="20" />
+                                                <fontDescription key="fontDescription" type="system" pointSize="12" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <stackView opaque="NO" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="tqy-xb-Wwn">
+                                                <rect key="frame" x="0" y="278.0" width="345" height="95.0" />
+                                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                <subviews>
+                                                    <stackView opaque="NO" axis="horizontal" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="S0M-XR-1Ls" alignment="center" distribution="fill">
+                                                        <rect key="frame" x="0" y="0" width="345" height="22" />
+                                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="Subtotal" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="uWO-18-wMB">
+                                                                <rect key="frame" x="0" y="0" width="167.5" height="20" />
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="S/ 0.00" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="a96-gf-gSH" textAlignment="right">
+                                                                <rect key="frame" x="177.5" y="0" width="167.5" height="22" />
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" axis="horizontal" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fsy-hT-PEm" alignment="center" distribution="fill">
+                                                        <rect key="frame" x="0" y="23.0" width="345" height="22" />
+                                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="Descuento VIP 10 %" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="SF5-iV-CsT">
+                                                                <rect key="frame" x="0" y="0" width="167.5" height="20" />
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="S/ 0.00" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="7zd-mr-23S" textAlignment="right">
+                                                                <rect key="frame" x="177.5" y="0" width="167.5" height="22" />
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" axis="horizontal" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="43B-Qd-9MN" alignment="center" distribution="fill">
+                                                        <rect key="frame" x="0" y="46.0" width="345" height="22" />
+                                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="IGV 18 %" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="sxG-bD-0o2">
+                                                                <rect key="frame" x="0" y="0" width="167.5" height="20" />
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="S/ 0.00" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="lBi-i8-3yS" textAlignment="right">
+                                                                <rect key="frame" x="177.5" y="0" width="167.5" height="22" />
+                                                                <fontDescription key="fontDescription" type="system" pointSize="16" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" axis="horizontal" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="1Ly-Tn-MBp" alignment="center" distribution="fill">
+                                                        <rect key="frame" x="0" y="69.0" width="345" height="26" />
+                                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="Total" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="HDH-UL-ft0">
+                                                                <rect key="frame" x="0" y="0" width="167.5" height="20" />
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="S/ 0.00" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="RaV-Zu-vit" textAlignment="right">
+                                                                <rect key="frame" x="177.5" y="0" width="167.5" height="26" />
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="19" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                            <button opaque="NO" buttonType="system" translatesAutoresizingMaskIntoConstraints="NO" id="bD8-AM-YEd">
+                                                <rect key="frame" x="0" y="385.0" width="345" height="48" />
+                                                <state key="normal" title="Registrar venta">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" />
+                                                </state>
+                                                <color key="backgroundColor" red="0.035" green="0.39" blue="0.96" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="44" id="U7k-ln-994" />
+                                                </constraints>
+                                                <connections>
+                                                    <action selector="registerSale:" destination="bYs-iW-8uk" eventType="touchUpInside" id="tB4-ty-uKy" />
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="mX1-t6-LCU" firstAttribute="top" secondItem="Lnj-zM-ozF" secondAttribute="top" constant="24" id="F0U-4c-0tu" />
+                                    <constraint firstItem="mX1-t6-LCU" firstAttribute="bottom" secondItem="Lnj-zM-ozF" secondAttribute="bottom" constant="-24" id="ipf-Ex-und" />
+                                    <constraint firstItem="mX1-t6-LCU" firstAttribute="leading" secondItem="Lnj-zM-ozF" secondAttribute="leading" constant="24" id="N5n-1I-fE0" />
+                                    <constraint firstItem="mX1-t6-LCU" firstAttribute="trailing" secondItem="Lnj-zM-ozF" secondAttribute="trailing" constant="-24" id="nMU-as-D9Z" />
+                                    <constraint firstItem="mX1-t6-LCU" firstAttribute="width" secondItem="Lnj-zM-ozF" secondAttribute="width" constant="-48" id="cJT-9A-H0H" />
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="TWX-CC-GWI" />
+                        <color key="backgroundColor" red="0.95" green="0.95" blue="0.97" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                        <constraints>
+                            <constraint firstItem="Lnj-zM-ozF" firstAttribute="top" secondItem="TWX-CC-GWI" secondAttribute="top" id="IFu-VH-bFF" />
+                            <constraint firstItem="Lnj-zM-ozF" firstAttribute="bottom" secondItem="TWX-CC-GWI" secondAttribute="bottom" id="nUV-kV-gaG" />
+                            <constraint firstItem="Lnj-zM-ozF" firstAttribute="leading" secondItem="TWX-CC-GWI" secondAttribute="leading" id="fUI-fG-eiD" />
+                            <constraint firstItem="Lnj-zM-ozF" firstAttribute="trailing" secondItem="TWX-CC-GWI" secondAttribute="trailing" id="ove-pB-l5r" />
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="sellerLabel" destination="ESY-zg-3Oz" id="cE1-Bc-UNw" />
+                        <outlet property="clientButton" destination="xwr-U3-FY4" id="MFJ-Pa-q8u" />
+                        <outlet property="productButton" destination="JgX-BD-3EK" id="Xju-tQ-Kkd" />
+                        <outlet property="stockLabel" destination="Ad5-Gh-3nS" id="vxw-cY-7cS" />
+                        <outlet property="quantityLabel" destination="pbm-RS-Kn1" id="xgk-Jv-8A1" />
+                        <outlet property="quantity" destination="5gI-vw-hEv" id="qqK-Yx-Gq1" />
+                        <outlet property="subtotalValue" destination="a96-gf-gSH" id="l4H-uu-Tjy" />
+                        <outlet property="discountValue" destination="7zd-mr-23S" id="tW7-ES-Iri" />
+                        <outlet property="taxValue" destination="lBi-i8-3yS" id="Wny-xa-gu6" />
+                        <outlet property="totalValue" destination="RaV-Zu-vit" id="DtT-EX-dJU" />
+                        <outlet property="registerButton" destination="bD8-AM-YEd" id="3Bj-Ts-rbr" />
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Sr-Yo-rYT" userLabel="First Responder" sceneMemberID="firstResponder" />
+            </objects>
+            <point key="canvasLocation" x="1560" y="0" />
+        </scene>
+        <scene sceneID="1ca-Z6-kFY">
+            <objects>
+                <tableViewController storyboardIdentifier="ProductsController" id="Aws-cB-WzC" customClass="CatalogController" customModule="Ventas" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="104" sectionHeaderHeight="18" sectionFooterHeight="18" id="9LN-Bs-kp7">
+                        <rect key="frame" x="0" y="0" width="393" height="852" />
+                        <color key="backgroundColor" red="0.955" green="0.972" blue="0.98" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                        <connections>
+                            <outlet property="dataSource" destination="Aws-cB-WzC" id="wUB-pr-wSK" />
+                            <outlet property="delegate" destination="Aws-cB-WzC" id="Dz7-Yd-Eik" />
+                        </connections>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="ike-7T-b09">
+                            <rect key="frame" x="0" y="0" width="393" height="58" />
+                            <subviews>
+                                <segmentedControl opaque="NO" selectedSegmentIndex="0" id="fs1-M2-gkR">
+                                    <rect key="frame" x="16" y="12" width="361" height="32" />
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES" />
+                                    <segments>
+                                        <segment title="Todas" />
+                                    </segments>
+                                </segmentedControl>
+                            </subviews>
+                        </view>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Productos" id="zD5-IS-35r" />
+                    <connections>
+                        <outlet property="categories" destination="fs1-M2-gkR" id="KCD-Iy-vQJ" />
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8cR-nj-KM1" userLabel="First Responder" sceneMemberID="firstResponder" />
+            </objects>
+            <point key="canvasLocation" x="2080" y="0" />
+        </scene>
+        <scene sceneID="sPT-b9-vjB">
+            <objects>
+                <tableViewController storyboardIdentifier="ClientsController" id="NV7-yJ-oy0" customClass="CatalogController" customModule="Ventas" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="104" sectionHeaderHeight="18" sectionFooterHeight="18" id="dcZ-8C-XFg">
+                        <rect key="frame" x="0" y="0" width="393" height="852" />
+                        <color key="backgroundColor" red="0.955" green="0.972" blue="0.98" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                        <connections>
+                            <outlet property="dataSource" destination="NV7-yJ-oy0" id="ja3-1x-uZb" />
+                            <outlet property="delegate" destination="NV7-yJ-oy0" id="jcG-ad-hSr" />
+                        </connections>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="5WC-Ta-vlC">
+                            <rect key="frame" x="0" y="0" width="393" height="58" />
+                            <subviews>
+                                <segmentedControl opaque="NO" selectedSegmentIndex="0" id="UYY-cQ-Z13">
+                                    <rect key="frame" x="16" y="12" width="361" height="32" />
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES" />
+                                    <segments>
+                                        <segment title="Todas" />
+                                    </segments>
+                                </segmentedControl>
+                            </subviews>
+                        </view>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Clientes" id="4V2-8G-h8b" />
+                    <connections>
+                        <outlet property="categories" destination="UYY-cQ-Z13" id="vVj-iq-Bku" />
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JXo-uD-DNp" userLabel="First Responder" sceneMemberID="firstResponder" />
+            </objects>
+            <point key="canvasLocation" x="0" y="1100" />
+        </scene>
+        <scene sceneID="1iz-53-KD8">
+            <objects>
+                <tableViewController storyboardIdentifier="MySalesController" id="0HD-p9-NNF" customClass="SalesController" customModule="Ventas" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="104" sectionHeaderHeight="18" sectionFooterHeight="18" id="swV-iE-Fiv">
+                        <rect key="frame" x="0" y="0" width="393" height="852" />
+                        <color key="backgroundColor" red="0.955" green="0.972" blue="0.98" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                        <connections>
+                            <outlet property="dataSource" destination="0HD-p9-NNF" id="aVJ-xx-PAJ" />
+                            <outlet property="delegate" destination="0HD-p9-NNF" id="HK5-ca-uo1" />
+                        </connections>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="mWt-WO-ZcS">
+                            <rect key="frame" x="0" y="0" width="393" height="180" />
+                            <subviews>
+                                <label opaque="NO" text="Hoy · S/ 0.00" numberOfLines="2" id="O8X-Ue-D0D">
+                                    <rect key="frame" x="15" y="10" width="173" height="60" />
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES" />
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16" />
+                                </label>
+                                <label opaque="NO" text="Mes · S/ 0.00" numberOfLines="2" id="Qw0-IS-oin">
+                                    <rect key="frame" x="205" y="10" width="173" height="60" />
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES" />
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16" />
+                                </label>
+                                <segmentedControl opaque="NO" selectedSegmentIndex="0" id="Ctc-qT-i6v">
+                                    <rect key="frame" x="16" y="80" width="361" height="32" />
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES" />
+                                    <segments>
+                                        <segment title="Todas" />
+                                        <segment title="Hoy" />
+                                        <segment title="Mes" />
+                                    </segments>
+                                </segmentedControl>
+                                <button opaque="NO" buttonType="system" id="XWB-1g-Xcb">
+                                    <rect key="frame" x="16" y="125" width="361" height="40" />
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES" />
+                                    <state key="normal" title="Todos los vendedores" />
+                                </button>
+                            </subviews>
+                        </view>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Mis ventas" id="rzU-Uq-TDm" />
+                    <connections>
+                        <outlet property="todaySummary" destination="O8X-Ue-D0D" id="ioL-PH-7Qx" />
+                        <outlet property="monthSummary" destination="Qw0-IS-oin" id="Zul-Xc-3hj" />
+                        <outlet property="period" destination="Ctc-qT-i6v" id="qKQ-m8-4sg" />
+                        <outlet property="seller" destination="XWB-1g-Xcb" id="5VB-Gp-R0p" />
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nyt-8W-Dvn" userLabel="First Responder" sceneMemberID="firstResponder" />
+            </objects>
+            <point key="canvasLocation" x="520" y="1100" />
+        </scene>
+        <scene sceneID="XRk-7c-kuB">
+            <objects>
+                <tableViewController storyboardIdentifier="TeamSalesController" id="HmC-zc-Ke2" customClass="SalesController" customModule="Ventas" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="104" sectionHeaderHeight="18" sectionFooterHeight="18" id="czY-AM-6Bj">
+                        <rect key="frame" x="0" y="0" width="393" height="852" />
+                        <color key="backgroundColor" red="0.955" green="0.972" blue="0.98" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                        <connections>
+                            <outlet property="dataSource" destination="HmC-zc-Ke2" id="vXH-SU-HS0" />
+                            <outlet property="delegate" destination="HmC-zc-Ke2" id="mwN-Im-Ex3" />
+                        </connections>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="j7n-sc-bAC">
+                            <rect key="frame" x="0" y="0" width="393" height="180" />
+                            <subviews>
+                                <label opaque="NO" text="Hoy · S/ 0.00" numberOfLines="2" id="s8h-3I-hx4">
+                                    <rect key="frame" x="15" y="10" width="173" height="60" />
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES" />
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16" />
+                                </label>
+                                <label opaque="NO" text="Mes · S/ 0.00" numberOfLines="2" id="u3q-9v-AkY">
+                                    <rect key="frame" x="205" y="10" width="173" height="60" />
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES" />
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16" />
+                                </label>
+                                <segmentedControl opaque="NO" selectedSegmentIndex="0" id="HCc-x2-etP">
+                                    <rect key="frame" x="16" y="80" width="361" height="32" />
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES" />
+                                    <segments>
+                                        <segment title="Todas" />
+                                        <segment title="Hoy" />
+                                        <segment title="Mes" />
+                                    </segments>
+                                </segmentedControl>
+                                <button opaque="NO" buttonType="system" id="ghe-lV-MG0">
+                                    <rect key="frame" x="16" y="125" width="361" height="40" />
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES" />
+                                    <state key="normal" title="Todos los vendedores" />
+                                </button>
+                            </subviews>
+                        </view>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Ventas del equipo" id="7T6-DT-XvK" />
+                    <connections>
+                        <outlet property="todaySummary" destination="s8h-3I-hx4" id="Qar-Wt-rFC" />
+                        <outlet property="monthSummary" destination="u3q-9v-AkY" id="X30-Xr-hW6" />
+                        <outlet property="period" destination="HCc-x2-etP" id="7GM-gf-axU" />
+                        <outlet property="seller" destination="ghe-lV-MG0" id="hv5-lN-J5I" />
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tUw-i6-2yq" userLabel="First Responder" sceneMemberID="firstResponder" />
+            </objects>
+            <point key="canvasLocation" x="1040" y="1100" />
+        </scene>
+        <scene sceneID="Jda-bJ-sfv">
+            <objects>
+                <viewController storyboardIdentifier="DashboardController" id="Klm-VJ-yD2" customClass="DashboardController" customModule="Ventas" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Uhd-8l-qyV">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852" />
+                        <subviews>
+                            <scrollView clipsSubviews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pjr-T6-jWe">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759" />
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="28J-JI-H9m">
+                                        <rect key="frame" x="24" y="24" width="345" height="644.0" />
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Fecha" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="nRU-TN-rgq">
+                                                <rect key="frame" x="0" y="0" width="345" height="20" />
+                                                <fontDescription key="fontDescription" type="system" pointSize="12" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Hola, supervisor" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="dN8-zI-HR7">
+                                                <rect key="frame" x="0" y="32.0" width="345" height="34" />
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Supervisor · Vista de la operación" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="hHj-fr-9ad">
+                                                <rect key="frame" x="0" y="78.0" width="345" height="20" />
+                                                <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <stackView opaque="NO" axis="horizontal" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vOC-62-ipZ" alignment="center" distribution="fillEqually">
+                                                <rect key="frame" x="0" y="110.0" width="345" height="78.0" />
+                                                <subviews>
+                                                    <stackView opaque="NO" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Jsn-Mp-ILY">
+                                                        <rect key="frame" x="0" y="0" width="167.5" height="78.0" />
+                                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="Vendido hoy" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="GYD-nj-Doq">
+                                                                <rect key="frame" x="0" y="0" width="167.5" height="20" />
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="S/ 0.00" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="GUr-EU-M3G">
+                                                                <rect key="frame" x="0" y="24.0" width="167.5" height="30" />
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="S/ 0.00 vs. ayer" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="C8V-EU-Al3">
+                                                                <rect key="frame" x="0" y="58.0" width="167.5" height="20" />
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <stackView opaque="NO" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="kBZ-OZ-hEK">
+                                                        <rect key="frame" x="177.5" y="0" width="167.5" height="78.0" />
+                                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="IGV del mes" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="y3n-Bu-C0E">
+                                                                <rect key="frame" x="0" y="0" width="167.5" height="20" />
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="S/ 0.00" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="3mp-zu-kH0">
+                                                                <rect key="frame" x="0" y="24.0" width="167.5" height="30" />
+                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" text="0 operaciones vigentes" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="kwB-ll-InL">
+                                                                <rect key="frame" x="0" y="58.0" width="167.5" height="20" />
+                                                                <fontDescription key="fontDescription" type="system" pointSize="14" />
+                                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Últimos siete días" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="IYC-ps-FKW">
+                                                <rect key="frame" x="0" y="200.0" width="345" height="28" />
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xev-rY-ZTm">
+                                                <rect key="frame" x="0" y="240.0" width="345" height="220" />
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="220" id="0nw-TD-J4Q" />
+                                                </constraints>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Ranking del mes" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="DzP-4U-7ki">
+                                                <rect key="frame" x="0" y="472.0" width="345" height="28" />
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <stackView axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="uga-KZ-cCv">
+                                                <rect key="frame" x="0" y="512.0" width="345" height="40" />
+                                                <subviews />
+                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" text="Stock bajo" numberOfLines="0" translatesAutoresizingMaskIntoConstraints="NO" id="dKS-od-SKQ">
+                                                <rect key="frame" x="0" y="564.0" width="345" height="28" />
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21" />
+                                                <color key="textColor" red="0.035" green="0.11" blue="0.20" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                                            </label>
+                                            <stackView axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="MVE-5X-xVB">
+                                                <rect key="frame" x="0" y="604.0" width="345" height="40" />
+                                                <subviews />
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="28J-JI-H9m" firstAttribute="top" secondItem="pjr-T6-jWe" secondAttribute="top" constant="24" id="gAX-2c-dLE" />
+                                    <constraint firstItem="28J-JI-H9m" firstAttribute="bottom" secondItem="pjr-T6-jWe" secondAttribute="bottom" constant="-24" id="TAH-5Z-0E2" />
+                                    <constraint firstItem="28J-JI-H9m" firstAttribute="leading" secondItem="pjr-T6-jWe" secondAttribute="leading" constant="24" id="seY-Ny-pma" />
+                                    <constraint firstItem="28J-JI-H9m" firstAttribute="trailing" secondItem="pjr-T6-jWe" secondAttribute="trailing" constant="-24" id="Vc0-fX-DcO" />
+                                    <constraint firstItem="28J-JI-H9m" firstAttribute="width" secondItem="pjr-T6-jWe" secondAttribute="width" constant="-48" id="Gx2-JI-QQg" />
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Cr-3Q-kqn" />
+                        <color key="backgroundColor" red="0.95" green="0.95" blue="0.97" alpha="1" colorSpace="custom" customColorSpace="sRGB" />
+                        <constraints>
+                            <constraint firstItem="pjr-T6-jWe" firstAttribute="top" secondItem="6Cr-3Q-kqn" secondAttribute="top" id="1qO-QJ-ch7" />
+                            <constraint firstItem="pjr-T6-jWe" firstAttribute="bottom" secondItem="6Cr-3Q-kqn" secondAttribute="bottom" id="21h-br-Coe" />
+                            <constraint firstItem="pjr-T6-jWe" firstAttribute="leading" secondItem="6Cr-3Q-kqn" secondAttribute="leading" id="JTQ-cq-xzw" />
+                            <constraint firstItem="pjr-T6-jWe" firstAttribute="trailing" secondItem="6Cr-3Q-kqn" secondAttribute="trailing" id="YT3-47-SHt" />
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="dateLabel" destination="nRU-TN-rgq" id="V03-XL-pcn" />
+                        <outlet property="greetingLabel" destination="dN8-zI-HR7" id="TyC-vu-c8k" />
+                        <outlet property="todayLabel" destination="GUr-EU-M3G" id="JNh-sT-SNx" />
+                        <outlet property="variationLabel" destination="C8V-EU-Al3" id="ft0-lO-WAA" />
+                        <outlet property="monthLabel" destination="3mp-zu-kH0" id="187-Jr-lu3" />
+                        <outlet property="countLabel" destination="kwB-ll-InL" id="oEa-hG-dn3" />
+                        <outlet property="chartContainer" destination="Xev-rY-ZTm" id="nSs-ga-u4U" />
+                        <outlet property="rankingStack" destination="uga-KZ-cCv" id="PP8-oa-wYb" />
+                        <outlet property="stockStack" destination="MVE-5X-xVB" id="plp-9k-v0j" />
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PGx-tT-jB1" userLabel="First Responder" sceneMemberID="firstResponder" />
+            </objects>
+            <point key="canvasLocation" x="1560" y="1100" />
+        </scene>
+        <scene sceneID="EQk-9p-PiR">
+            <objects>
+                <navigationController id="mgY-Z2-dV9" sceneMemberID="viewController" storyboardIdentifier="LoginNavigation">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="b6d-Yt-tpw">
+                        <rect key="frame" x="0" y="0" width="393" height="44" />
+                    </navigationBar>
+                    <connections>
+                        <segue destination="vZC-Yg-6vw" kind="relationship" relationship="rootViewController" id="0rz-X2-nUk" />
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YJy-nr-gZf" userLabel="First Responder" sceneMemberID="firstResponder" />
+            </objects>
+            <point key="canvasLocation" x="2080" y="1100" />
+        </scene>
+    </scenes>
+</document>

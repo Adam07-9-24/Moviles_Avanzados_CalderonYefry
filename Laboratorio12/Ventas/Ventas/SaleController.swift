@@ -6,48 +6,34 @@ final class SaleController: UIViewController {
     var products = [Producto]()
     var client: Cliente?
     var product: Producto?
-    let clientButton = UIButton(type: .system)
-    let productButton = UIButton(type: .system)
-    let quantity = UIStepper()
-    let quantityLabel = Theme.label("Cantidad · 1", bold: true)
-    let stockLabel = Theme.label("")
-    let summary = Theme.label("", size: 16)
-    let subtotalValue = Theme.label("S/ 0.00", bold: true)
-    let discountValue = Theme.label("S/ 0.00", bold: true)
-    let taxValue = Theme.label("S/ 0.00", bold: true)
-    let totalValue = Theme.label("S/ 0.00", size: 19, bold: true)
-    lazy var registerButton = Theme.button("Registrar venta", action: UIAction { [weak self] _ in self?.register() })
-    func row(_ name: String, _ value: UILabel) -> UIStackView {
-        let label = Theme.label(name, size: 16); label.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        value.textAlignment = .right; value.setContentHuggingPriority(.required, for: .horizontal)
-        let row = UIStackView(arrangedSubviews: [label, value]); row.axis = .horizontal; row.distribution = .fill
-        return row
-    }
+    @IBOutlet private weak var sellerLabel: UILabel!
+    @IBOutlet private weak var clientButton: UIButton!
+    @IBOutlet private weak var productButton: UIButton!
+    @IBOutlet private weak var quantity: UIStepper!
+    @IBOutlet private weak var quantityLabel: UILabel!
+    @IBOutlet private weak var stockLabel: UILabel!
+    @IBOutlet private weak var subtotalValue: UILabel!
+    @IBOutlet private weak var discountValue: UILabel!
+    @IBOutlet private weak var taxValue: UILabel!
+    @IBOutlet private weak var totalValue: UILabel!
+    @IBOutlet private weak var registerButton: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        quantity.minimumValue = 1; quantity.maximumValue = 1_000_000; quantity.value = 1
+        sellerLabel.text = Store.shared.current?.nombre
+        quantity.minimumValue = 1
+        quantity.maximumValue = 1_000_000
+        quantity.value = 1
         quantity.addTarget(self, action: #selector(update), for: .valueChanged)
-        for button in [clientButton,productButton] {
-            button.contentHorizontalAlignment = .leading
-            button.heightAnchor.constraint(equalToConstant: 48).isActive = true
-            button.showsMenuAsPrimaryAction = true
-            button.backgroundColor = Theme.background; button.layer.cornerRadius = 12
-            button.tintColor = Theme.tealDark
+        for button in [clientButton, productButton] {
+            button?.contentHorizontalAlignment = .leading
+            button?.showsMenuAsPrimaryAction = true
+            button?.tintColor = Theme.tealDark
         }
-        let selection = Theme.stack([
-            Theme.label("CLIENTE", size: 12, bold: true), clientButton,
-            Theme.label("PRODUCTO", size: 12, bold: true), productButton, stockLabel, quantityLabel, quantity
-        ])
-        selection.spacing = 6
-        selection.backgroundColor = .white; selection.layer.cornerRadius = 18
-        selection.isLayoutMarginsRelativeArrangement = true
-        selection.layoutMargins = .init(top: 12, left: 16, bottom: 12, right: 16)
-        let seller = Theme.card([Theme.label("VENDEDOR", size: 11, bold: true), Theme.label(Store.shared.current?.nombre ?? "", size: 17, bold: true), Theme.label("La venta se registrará a tu nombre", size: 13)], padding: 12)
-        let amounts = Theme.card([row("Subtotal", subtotalValue), row("Descuento VIP", discountValue), row("IGV 18 %", taxValue), row("Total", totalValue)])
-        formLayout(Theme.stack([
-            seller, selection, Theme.label("RESUMEN DE LA VENTA", size: 12, bold: true), amounts,
-            registerButton
-        ]))
+    }
+
+    @IBAction private func registerSale(_ sender: UIButton) {
+        register()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

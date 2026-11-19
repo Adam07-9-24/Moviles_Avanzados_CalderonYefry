@@ -2,8 +2,10 @@ import UIKit
 
 final class SalesController: UITableViewController, UISearchResultsUpdating {
     var rows = [Venta]()
-    let period = UISegmentedControl(items: ["Todas","Hoy","Mes"])
-    let seller = UIButton(type: .system)
+    @IBOutlet private weak var period: UISegmentedControl!
+    @IBOutlet private weak var seller: UIButton!
+    @IBOutlet private weak var todaySummary: UILabel!
+    @IBOutlet private weak var monthSummary: UILabel!
     let search = UISearchController(searchResultsController: nil)
     var selectedSeller: Usuario?
     override func viewDidLoad() {
@@ -27,35 +29,25 @@ final class SalesController: UITableViewController, UISearchResultsUpdating {
         let month = all.filter { Calendar.current.isDate($0.fecha, equalTo: Date(), toGranularity: .month) }.reduce(0) { $0+$1.total }
         let todayCount = all.filter { Calendar.current.isDateInToday($0.fecha) }.count
         let monthCount = all.filter { Calendar.current.isDate($0.fecha, equalTo: Date(), toGranularity: .month) }.count
-        let left = Theme.card([Theme.label("Hoy", size: 13), Theme.label(Theme.money(today), size: 20, bold: true), Theme.label("\(todayCount) ventas", size: 12)], padding: 12)
-        let right = Theme.card([Theme.label("Mes", size: 13), Theme.label(Theme.money(month), size: 20, bold: true), Theme.label("\(monthCount) ventas", size: 12)], padding: 12)
-        let total = UIStackView(arrangedSubviews: [left, right]); total.axis = .horizontal; total.spacing = 10; total.distribution = .fillEqually
-        total.heightAnchor.constraint(equalToConstant: 95).isActive = true
-        let pieces: [UIView]
+        todaySummary.text = "Hoy\n\(Theme.money(today)) · \(todayCount) ventas"
+        monthSummary.text = "Mes\n\(Theme.money(month)) · \(monthCount) ventas"
+        seller.isHidden = !Store.shared.supervisor
         if Store.shared.supervisor {
             let users: [Usuario] = Store.shared.fetch("Usuario", predicate: NSPredicate(format: "rol == %@", Role.vendedor.rawValue), sort: "nombre")
-            let chips = UIStackView(); chips.axis = .horizontal; chips.spacing = 8
-            let choices: [(String, Usuario?)] = [("Todos", nil)] + users.map { ($0.nombre, Optional($0)) }
-            for (name, user) in choices {
-                let button = UIButton(type: .system)
-                var config = UIButton.Configuration.filled(); config.title = name
-                config.cornerStyle = .capsule
-                config.baseBackgroundColor = (selectedSeller == user) ? Theme.tealDark : .white
-                config.baseForegroundColor = (selectedSeller == user) ? .white : Theme.navy
-                button.configuration = config
-                button.addAction(UIAction { [weak self] _ in self?.selectedSeller = user; self?.refresh() }, for: .touchUpInside)
-                chips.addArrangedSubview(button)
+            let allAction = UIAction(title: "Todos", state: selectedSeller == nil ? .on : .off) { [weak self] _ in
+                self?.selectedSeller = nil
+                self?.refresh()
             }
-            let scroll = UIScrollView(); scroll.showsHorizontalScrollIndicator = false
-            chips.translatesAutoresizingMaskIntoConstraints = false; scroll.addSubview(chips)
-            NSLayoutConstraint.activate([chips.leadingAnchor.constraint(equalTo: scroll.contentLayoutGuide.leadingAnchor), chips.trailingAnchor.constraint(equalTo: scroll.contentLayoutGuide.trailingAnchor), chips.topAnchor.constraint(equalTo: scroll.contentLayoutGuide.topAnchor), chips.bottomAnchor.constraint(equalTo: scroll.contentLayoutGuide.bottomAnchor), chips.heightAnchor.constraint(equalTo: scroll.frameLayoutGuide.heightAnchor)])
-            scroll.heightAnchor.constraint(equalToConstant: 38).isActive = true
-            pieces = [total, period, scroll]
-        } else { pieces = [total,period] }
-        let stack = Theme.stack(pieces)
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: Store.shared.supervisor ? 222 : 175))
-        stack.frame = header.bounds.insetBy(dx: 20, dy: 10)
-        header.addSubview(stack); tableView.tableHeaderView = header
+            let actions = users.map { user in
+                UIAction(title: user.nombre, state: selectedSeller == user ? .on : .off) { [weak self] _ in
+                    self?.selectedSeller = user
+                    self?.refresh()
+                }
+            }
+            seller.setTitle(selectedSeller?.nombre ?? "Todos los vendedores", for: .normal)
+            seller.menu = UIMenu(children: [allAction] + actions)
+            seller.showsMenuAsPrimaryAction = true
+        }
         tableView.reloadData()
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { rows.count }

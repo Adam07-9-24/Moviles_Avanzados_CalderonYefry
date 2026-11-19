@@ -2,12 +2,10 @@ import UIKit
 import CoreData
 
 final class CatalogController: UITableViewController, UISearchResultsUpdating {
-    let products: Bool
+    var products = true
     var rows = [NSManagedObject]()
     let search = UISearchController(searchResultsController: nil)
-    let categories = UISegmentedControl(items: ["Todas"])
-    init(products: Bool) { self.products = products; super.init(style: .insetGrouped) }
-    required init?(coder: NSCoder) { fatalError() }
+    @IBOutlet private weak var categories: UISegmentedControl!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.backgroundColor = Theme.background
@@ -21,6 +19,7 @@ final class CatalogController: UITableViewController, UISearchResultsUpdating {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
         }
         categories.addTarget(self, action: #selector(filter), for: .valueChanged)
+        tableView.tableHeaderView?.isHidden = !products
     }
     override func viewWillAppear(_ animated: Bool) { super.viewWillAppear(animated); refresh() }
     func updateSearchResults(for searchController: UISearchController) { load() }
@@ -34,9 +33,6 @@ final class CatalogController: UITableViewController, UISearchResultsUpdating {
             let names = ["Todas"] + Array(Set(list.map(\.categoria))).sorted()
             for (index,name) in names.enumerated() { categories.insertSegment(withTitle: name, at: index, animated: false) }
             categories.selectedSegmentIndex = names.firstIndex(of: selected) ?? 0
-            categories.frame = CGRect(x: 16, y: 12, width: tableView.bounds.width - 32, height: 34)
-            let header = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 58))
-            header.addSubview(categories); tableView.tableHeaderView = header
         }
         load()
     }

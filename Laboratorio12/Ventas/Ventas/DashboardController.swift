@@ -20,68 +20,81 @@ struct WeekChart: View {
     }
 }
 final class DashboardController: UIViewController {
-    var chartHost: UIHostingController<WeekChart>?
-    override func viewWillAppear(_ animated: Bool) { super.viewWillAppear(animated); render() }
-    func render() {
+    @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var greetingLabel: UILabel!
+    @IBOutlet private weak var todayLabel: UILabel!
+    @IBOutlet private weak var variationLabel: UILabel!
+    @IBOutlet private weak var monthLabel: UILabel!
+    @IBOutlet private weak var countLabel: UILabel!
+    @IBOutlet private weak var chartContainer: UIView!
+    @IBOutlet private weak var rankingStack: UIStackView!
+    @IBOutlet private weak var stockStack: UIStackView!
+    private var chartHost: UIHostingController<WeekChart>?
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        render()
+    }
+
+    private func render() {
         guard Store.shared.supervisor else { return }
-        if let host = chartHost {
-            host.willMove(toParent: nil); host.view.removeFromSuperview(); host.removeFromParent()
-        }
-        view.subviews.forEach { $0.removeFromSuperview() }
         let all = Store.shared.sales().filter { !$0.anulada }
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
         let yesterday = calendar.date(byAdding: .day, value: -1, to: today)!
         let todaySales = all.filter { calendar.isDate($0.fecha, inSameDayAs: today) }
-        let previous = all.filter { calendar.isDate($0.fecha, inSameDayAs: yesterday) }.reduce(0) { $0+$1.total }
-        let total = todaySales.reduce(0) { $0+$1.total }
-        let monthSales = all.filter { calendar.isDate($0.fecha, equalTo: Date(), toGranularity: .month) }
-        let monthTotal = monthSales.reduce(0) { $0+$1.total }
+        let previous = all.filter { calendar.isDate($0.fecha, inSameDayAs: yesterday) }.reduce(0) { $0 + $1.total }
+        let total = todaySales.reduce(0) { $0 + $1.total }
+        let month = all.filter { calendar.isDate($0.fecha, equalTo: Date(), toGranularity: .month) }
         let variation = total - previous
-        let todayCard = Theme.card([Theme.section("Vendido hoy"), Theme.label(Theme.money(total), size: 23, bold: true), Theme.label("\(variation >= 0 ? "+" : "")\(Theme.money(variation)) vs. ayer", size: 13)])
-        let monthCard = Theme.card([Theme.section("Ventas del mes"), Theme.label(Theme.money(monthTotal), size: 23, bold: true), Theme.label("\(monthSales.count) operaciones vigentes", size: 13)])
-        let card = UIStackView(arrangedSubviews: [todayCard, monthCard]); card.axis = .horizontal; card.spacing = 12; card.distribution = .fillEqually
+        dateLabel.text = Date().formatted(Date.FormatStyle(date: .complete, time: .omitted).locale(Locale(identifier: "es_PE"))).uppercased()
+        greetingLabel.text = "Hola, " + (Store.shared.current?.nombre ?? "")
+        todayLabel.text = Theme.money(total)
+        variationLabel.text = "\(variation >= 0 ? "+" : "")\(Theme.money(variation)) vs. ayer"
+        monthLabel.text = Theme.money(month.reduce(0) { $0 + $1.igv })
+        countLabel.text = "\(month.count) operaciones vigentes"
+
         let days = (0..<7).map { index -> DayAmount in
             let day = calendar.date(byAdding: .day, value: index - 6, to: today)!
-            return DayAmount(id: day, total: all.filter { calendar.isDate($0.fecha, inSameDayAs: day) }.reduce(0) { $0+$1.total })
+            return DayAmount(id: day, total: all.filter { calendar.isDate($0.fecha, inSameDayAs: day) }.reduce(0) { $0 + $1.total })
         }
-        let host = UIHostingController(rootView: WeekChart(days: days))
-        chartHost = host
-        addChild(host); host.didMove(toParent: self)
-        host.view.layer.cornerRadius = 16; host.view.clipsToBounds = true
-        host.view.heightAnchor.constraint(equalToConstant: 220).isActive = true
-        let date = Theme.label(Date().formatted(Date.FormatStyle(date: .complete, time: .omitted).locale(Locale(identifier: "es_PE"))).uppercased(), size: 11, bold: true)
-        date.textColor = Theme.tealDark
-        let stack = Theme.stack([
-            date,
-            Theme.label("Hola, "+(Store.shared.current?.nombre ?? ""), size: 27, bold: true),
-            Theme.label("Supervisor · Vista de la operación", size: 14),
-            card, Theme.label("Últimos siete días", size: 21, bold: true), host.view,
-            Theme.label("Ranking del mes", size: 21, bold: true)
-        ])
-        let month = all.filter { calendar.isDate($0.fecha, equalTo: Date(), toGranularity: .month) }
+        if let host = chartHost {
+            host.rootView = WeekChart(days: days)
+        } else {
+            let host = UIHostingController(rootView: WeekChart(days: days))
+            addChild(host)
+            host.view.translatesAutoresizingMaskIntoConstraints = false
+            chartContainer.addSubview(host.view)
+            NSLayoutConstraint.activate([
+                host.view.topAnchor.constraint(equalTo: chartContainer.topAnchor),
+                host.view.bottomAnchor.constraint(equalTo: chartContainer.bottomAnchor),
+                host.view.leadingAnchor.constraint(equalTo: chartContainer.leadingAnchor),
+                host.view.trailingAnchor.constraint(equalTo: chartContainer.trailingAnchor)
+            ])
+            host.didMove(toParent: self)
+            chartHost = host
+        }
+        rankingStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         let users: [Usuario] = Store.shared.fetch("Usuario", predicate: NSPredicate(format: "rol == %@", Role.vendedor.rawValue))
-        let ranking = users.map { user in (user.nombre, month.filter { $0.vendedor == user }.reduce(0) { $0+$1.total }) }.sorted { $0.1 > $1.1 }
-        let rankingCard = Theme.card([])
-        for (i,item) in ranking.enumerated() {
-            let line = Theme.label("\(i+1).  \(item.0)   ·   \(Theme.money(item.1))", size: 15, bold: true)
-            rankingCard.addArrangedSubview(line)
-            let bar = UIProgressView(progressViewStyle: .default); bar.progressTintColor = Theme.tealDark
-            bar.trackTintColor = Theme.background
+        let ranking = users.map { user in
+            (user.nombre, month.filter { $0.vendedor == user }.reduce(0) { $0 + $1.total })
+        }.sorted { $0.1 > $1.1 }
+        for (index, item) in ranking.enumerated() {
+            rankingStack.addArrangedSubview(Theme.label("\(index + 1).  \(item.0) · \(Theme.money(item.1))", size: 15, bold: true))
+            let bar = UIProgressView(progressViewStyle: .default)
+            bar.progressTintColor = Theme.tealDark
             bar.progress = Float(item.1 / max(ranking.first?.1 ?? 0, 1))
-            rankingCard.addArrangedSubview(bar)
+            rankingStack.addArrangedSubview(bar)
         }
-        if !ranking.isEmpty { stack.addArrangedSubview(rankingCard) }
-        if ranking.isEmpty { stack.addArrangedSubview(Theme.label("Aún no hay vendedores.")) }
-        stack.addArrangedSubview(Theme.label("Stock bajo", size: 21, bold: true))
+        if ranking.isEmpty { rankingStack.addArrangedSubview(Theme.label("Aún no hay vendedores.")) }
+        stockStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         let low: [Producto] = Store.shared.fetch("Producto", predicate: NSPredicate(format: "stock <= 10"), sort: "stock")
-        for p in low {
-            let label = Theme.label("\(p.nombre) · \(p.stock) unidades")
-            label.textColor = p.stock <= 5 ? .systemRed : .systemOrange
-            stack.addArrangedSubview(label)
+        for product in low {
+            let label = Theme.label("\(product.nombre) · \(product.stock) unidades")
+            label.textColor = product.stock <= 5 ? .systemRed : .systemOrange
+            stockStack.addArrangedSubview(label)
         }
-        if low.isEmpty { stack.addArrangedSubview(Theme.label("Inventario en buen nivel.")) }
-        formLayout(stack)
+        if low.isEmpty { stockStack.addArrangedSubview(Theme.label("Inventario en buen nivel.")) }
     }
 }
 

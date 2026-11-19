@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         Theme.configureAppearance()
         window.tintColor = Theme.teal
         window.overrideUserInterfaceStyle = .light
-        window.rootViewController = UINavigationController(rootViewController: LoginController())
+        window.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()!
         window.makeKeyAndVisible()
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("--verify") {
@@ -27,8 +27,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 enum Theme {
     static let navy = UIColor(red: 0.035, green: 0.11, blue: 0.20, alpha: 1)
-    static let teal = UIColor(red: 0.02, green: 0.67, blue: 0.59, alpha: 1)
-    static let tealDark = UIColor(red: 0.01, green: 0.48, blue: 0.44, alpha: 1)
+    static let teal = UIColor(red: 0.035, green: 0.39, blue: 0.96, alpha: 1)
+    static let tealDark = UIColor(red: 0.035, green: 0.39, blue: 0.96, alpha: 1)
     static let background = UIColor(red: 0.955, green: 0.972, blue: 0.98, alpha: 1)
     static let muted = UIColor(red: 0.39, green: 0.45, blue: 0.51, alpha: 1)
     static func configureAppearance() {
@@ -132,104 +132,101 @@ extension UIViewController {
         ])
     }
     func showApp() {
-        let tabs = UITabBarController()
-        let supervisor = Store.shared.supervisor
-        let pages: [(UIViewController,String,String)] = supervisor ?
-            [(DashboardController(),"Resumen","chart.bar.fill"),(SalesController(),"Ventas","receipt"),
-             (CatalogController(products: true),"Productos","shippingbox"),(CatalogController(products: false),"Clientes","person.2"),
-             (AccountController(),"Cuenta","person.crop.circle")] :
-            [(CatalogController(products: true),"Productos","shippingbox"),(CatalogController(products: false),"Clientes","person.2"),
-             (SaleController(),"Venta","plus.circle"),(SalesController(),"Mis ventas","receipt"),
-             (AccountController(),"Cuenta","person.crop.circle")]
-        tabs.viewControllers = pages.map { vc, title, icon in
-            vc.title = title
-            let nav = UINavigationController(rootViewController: vc)
-            nav.tabBarItem = UITabBarItem(title: title, image: UIImage(systemName: icon), selectedImage: nil)
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground(); appearance.backgroundColor = .white
-            appearance.titleTextAttributes = [.foregroundColor: Theme.navy, .font: UIFont.systemFont(ofSize: 18, weight: .bold)]
-            nav.navigationBar.standardAppearance = appearance; nav.navigationBar.scrollEdgeAppearance = appearance
-            return nav
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let tabs = storyboard.instantiateViewController(withIdentifier: "MainTabs") as? UITabBarController,
+              let navigationControllers = tabs.viewControllers as? [UINavigationController] else { return }
+
+        let identifiers = Store.shared.supervisor
+            ? ["NavDashboardController", "NavTeamSalesController", "NavProductsController", "NavClientsController", "NavAccountController"]
+            : ["NavProductsController", "NavClientsController", "NavSaleController", "NavMySalesController", "NavAccountController"]
+        let icons = Store.shared.supervisor
+            ? ["chart.bar.fill", "receipt", "shippingbox", "person.2", "person.crop.circle"]
+            : ["shippingbox", "person.2", "plus.circle", "receipt", "person.crop.circle"]
+        let selected = identifiers.compactMap { identifier in
+            navigationControllers.first { $0.restorationIdentifier == identifier }
         }
+        guard selected.count == identifiers.count else { return }
+        for (navigation, icon) in zip(selected, icons) {
+            if let catalog = navigation.viewControllers.first as? CatalogController {
+                catalog.products = navigation.restorationIdentifier == "NavProductsController"
+            }
+            navigation.viewControllers.first?.title = navigation.tabBarItem.title
+            navigation.tabBarItem.image = UIImage(systemName: icon)
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .white
+            appearance.titleTextAttributes = [.foregroundColor: Theme.navy, .font: UIFont.systemFont(ofSize: 18, weight: .bold)]
+            navigation.navigationBar.standardAppearance = appearance
+            navigation.navigationBar.scrollEdgeAppearance = appearance
+        }
+        tabs.viewControllers = selected
         tabs.tabBar.tintColor = Theme.tealDark
         view.window?.rootViewController = tabs
     }
 }
 final class LoginController: UIViewController {
-    let user = Theme.field("Usuario", symbol: "person.fill")
-    let password = Theme.field("Contraseña", secure: true, symbol: "lock.fill")
-    let errorLabel = Theme.label("", size: 14)
+    @IBOutlet private weak var user: UITextField!
+    @IBOutlet private weak var password: UITextField!
+    @IBOutlet private weak var errorLabel: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Gestión de Ventas"
-        user.textContentType = .username; password.textContentType = .password
-        let icon = UIImageView(image: UIImage(systemName: "chart.line.uptrend.xyaxis.circle.fill"))
-        icon.tintColor = Theme.tealDark; icon.contentMode = .scaleAspectFit
-        icon.heightAnchor.constraint(equalToConstant: 82).isActive = true
-        errorLabel.textColor = .systemRed
-        formLayout(Theme.stack([
-            icon, Theme.label("Gestión de Ventas", size: 32, bold: true),
-            Theme.label("Control comercial simple, seguro y organizado.", size: 17),
-            Theme.card([Theme.section("Acceso a tu cuenta"), user, password, errorLabel]),
-            Theme.button("Ingresar", action: UIAction { [weak self] _ in
-                guard let self else { return }
-                do { try Store.shared.login(usuario: self.user.text ?? "", clave: self.password.text ?? ""); self.showApp() }
-                catch { self.errorLabel.text = error.localizedDescription }
-            }),
-            Theme.secondaryButton("Crear cuenta", action: UIAction { [weak self] _ in
-                self?.navigationController?.pushViewController(RegisterController(), animated: true)
-            }),
-            Theme.label("Estudiante · Yefry Calderon", size: 12)
-        ]))
+        user.textContentType = .username
+        password.textContentType = .password
+        errorLabel.text = ""
     }
+
+    @IBAction private func signIn(_ sender: UIButton) {
+        do {
+            try Store.shared.login(usuario: user.text ?? "", clave: password.text ?? "")
+            showApp()
+        } catch {
+            errorLabel.text = error.localizedDescription
+        }
+    }
+
 }
 final class RegisterController: UIViewController {
-    let name = Theme.field("Nombre completo", symbol: "person.text.rectangle")
-    let user = Theme.field("Usuario", symbol: "at")
-    let password = Theme.field("Contraseña (mínimo 6 caracteres)", secure: true, symbol: "lock.fill")
-    let confirm = Theme.field("Confirmar contraseña", secure: true, symbol: "checkmark.shield.fill")
-    let role = UISegmentedControl(items: Role.allCases.map(\.rawValue))
-    let errorLabel = Theme.label("", size: 14)
+    @IBOutlet private weak var name: UITextField!
+    @IBOutlet private weak var user: UITextField!
+    @IBOutlet private weak var password: UITextField!
+    @IBOutlet private weak var confirm: UITextField!
+    @IBOutlet private weak var role: UISegmentedControl!
+    @IBOutlet private weak var errorLabel: UILabel!
+
     override func viewDidLoad() {
-        super.viewDidLoad(); title = "Crear cuenta"; role.selectedSegmentIndex = 0
-        errorLabel.textColor = .systemRed
-        let identity = Theme.card([Theme.section("Datos personales"), name, user])
-        let access = Theme.card([Theme.section("Seguridad"), password, confirm])
-        let permissions = Theme.card([Theme.section("Rol y permisos"), Theme.label("Selecciona el perfil que utilizarás en la aplicación.", size: 14), role])
-        formLayout(Theme.stack([
-            Theme.label("Crear cuenta", size: 30, bold: true), Theme.label("Configura tu acceso al equipo comercial."),
-            identity, access, permissions, errorLabel,
-            Theme.button("Registrarme", action: UIAction { [weak self] _ in
-                guard let self else { return }
-                do {
-                    _ = try Store.shared.register(nombre: self.name.text ?? "", usuario: self.user.text ?? "",
-                        clave: self.password.text ?? "", confirmacion: self.confirm.text ?? "",
-                        rol: Role.allCases[self.role.selectedSegmentIndex])
-                    self.showApp()
-                } catch { self.errorLabel.text = error.localizedDescription }
-            })
-        ]))
+        super.viewDidLoad()
+        title = "Crear cuenta"
+        role.selectedSegmentIndex = 0
+        errorLabel.text = ""
+    }
+
+    @IBAction private func register(_ sender: UIButton) {
+        do {
+            _ = try Store.shared.register(nombre: name.text ?? "", usuario: user.text ?? "",
+                clave: password.text ?? "", confirmacion: confirm.text ?? "",
+                rol: Role.allCases[role.selectedSegmentIndex])
+            showApp()
+        } catch {
+            errorLabel.text = error.localizedDescription
+        }
     }
 }
 final class AccountController: UIViewController {
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var userLabel: UILabel!
+    @IBOutlet private weak var roleLabel: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let u = Store.shared.current
-        let initials = (u?.nombre ?? "YC").split(separator: " ").prefix(2).compactMap(\.first).map(String.init).joined()
-        let avatar = Theme.label(initials.uppercased(), size: 28, bold: true)
-        avatar.textAlignment = .center; avatar.textColor = .white; avatar.backgroundColor = Theme.navy
-        avatar.layer.cornerRadius = 38; avatar.clipsToBounds = true
-        avatar.heightAnchor.constraint(equalToConstant: 76).isActive = true
-        avatar.widthAnchor.constraint(equalToConstant: 76).isActive = true
-        let profile = Theme.card([avatar, Theme.label(u?.nombre ?? "", size: 23, bold: true), Theme.label("@"+(u?.usuario ?? "")), Theme.label(u?.rol ?? "", size: 14, bold: true)])
-        profile.alignment = .center
-        formLayout(Theme.stack([
-            Theme.label("Mi cuenta", size: 30, bold: true), profile,
-            Theme.card([Theme.section("Información académica"), Theme.label("Gestión de Ventas · Semana 12"), Theme.label("Estudiante: Yefry Calderon", size: 14)]),
-            Theme.button("Cerrar sesión", action: UIAction { [weak self] _ in
-                Store.shared.current = nil
-                self?.view.window?.rootViewController = UINavigationController(rootViewController: LoginController())
-            })
-        ]))
+        nameLabel.text = Store.shared.current?.nombre
+        userLabel.text = "@" + (Store.shared.current?.usuario ?? "")
+        roleLabel.text = Store.shared.current?.rol
+    }
+
+    @IBAction private func signOut(_ sender: UIButton) {
+        Store.shared.current = nil
+        view.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
     }
 }
