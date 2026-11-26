@@ -1,0 +1,43 @@
+# Firebase application configuration at any depth
+GoogleService-Info.plist
+
+# Environment and local secrets
+.env*
+*.env
+*.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.p8
+*.jks
+*.keystore
+*.cer
+*.crt
+*.der
+*.cert
+*.keychain
+*.keychain-db
+*.mobileprovision
+*.provisionprofile
+*service-account*.json
+*service_account*.json
+*serviceAccount*.json
+*ServiceAccount*.json
+*adminsdk*.json
+*firebase-admin*.json
+application_default_credentials.json
+
+# Xcode and build output
+xcuserdata/
+*.xcuserstate
+DerivedData/
+build/
+
+# System and temporary files
+.DS_Store
+*.tmp
+*.temp
+*.swp
+*.swo
+*~

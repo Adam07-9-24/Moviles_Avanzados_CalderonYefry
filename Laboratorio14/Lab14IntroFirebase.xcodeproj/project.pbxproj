@@ -1,0 +1,47 @@
+// !$*UTF8*$!
+{
+ archiveVersion = 1;
+ classes = {};
+ objectVersion = 56;
+ objects = {
+  000000000000000000000011 /* Lab14IntroFirebaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000001 /* Lab14IntroFirebaseApp.swift */; };
+  000000000000000000000012 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000002 /* ContentView.swift */; };
+  000000000000000000000013 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000003 /* AuthView.swift */; };
+  000000000000000000000014 /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000004 /* DatabaseService.swift */; };
+  000000000000000000000015 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000005 /* MessagesView.swift */; };
+  000000000000000000000016 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000006 /* GoogleService-Info.plist */; };
+  000000000000000000000017 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000007 /* Assets.xcassets */; };
+  000000000000000000000031 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000021 /* FirebaseCore */; };
+  000000000000000000000032 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000022 /* FirebaseAuth */; };
+  000000000000000000000033 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000023 /* FirebaseDatabase */; };
+  000000000000000000000034 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000024 /* FirebaseFirestore */; };
+  000000000000000000000001 /* Lab14IntroFirebaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lab14IntroFirebaseApp.swift; sourceTree = "<group>"; };
+  000000000000000000000002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+  000000000000000000000003 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+  000000000000000000000004 /* DatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+  000000000000000000000005 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
+  000000000000000000000006 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GoogleService-Info.plist; sourceTree = "<group>"; };
+  000000000000000000000007 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+  000000000000000000000105 /* Lab14IntroFirebase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lab14IntroFirebase.app; sourceTree = BUILT_PRODUCTS_DIR; };
+  000000000000000000000102 = {isa = PBXGroup; children = (000000000000000000000103, 000000000000000000000104,); sourceTree = "<group>"; };
+  000000000000000000000103 = {isa = PBXGroup; children = (000000000000000000000001, 000000000000000000000002, 000000000000000000000003, 000000000000000000000004, 000000000000000000000005, 000000000000000000000006, 000000000000000000000007, ); path = Lab14IntroFirebase; sourceTree = "<group>"; };
+  000000000000000000000104 = {isa = PBXGroup; children = (000000000000000000000105,); name = Products; sourceTree = "<group>"; };
+  000000000000000000000106 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000011, 000000000000000000000012, 000000000000000000000013, 000000000000000000000014, 000000000000000000000015, ); runOnlyForDeploymentPostprocessing = 0; };
+  000000000000000000000107 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000016, 000000000000000000000017,); runOnlyForDeploymentPostprocessing = 0; };
+  000000000000000000000108 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (000000000000000000000031, 000000000000000000000032, 000000000000000000000033, 000000000000000000000034, ); runOnlyForDeploymentPostprocessing = 0; };
+  000000000000000000000101 = {isa = PBXNativeTarget; buildConfigurationList = 00000000000000000000010B; buildPhases = (000000000000000000000106, 000000000000000000000108, 000000000000000000000107,); buildRules = (); dependencies = (); name = Lab14IntroFirebase; packageProductDependencies = (000000000000000000000021, 000000000000000000000022, 000000000000000000000023, 000000000000000000000024, ); productName = Lab14IntroFirebase; productReference = 000000000000000000000105; productType = "com.apple.product-type.application"; };
+  000000000000000000000100 = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastUpgradeCheck = 1620; TargetAttributes = {000000000000000000000101 = {CreatedOnToolsVersion = 16.2; }; }; }; buildConfigurationList = 00000000000000000000010A; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base,); mainGroup = 000000000000000000000102; packageReferences = (000000000000000000000109,); productRefGroup = 000000000000000000000104; projectDirPath = ""; projectRoot = ""; targets = (000000000000000000000101,); };
+  000000000000000000000109 = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/firebase/firebase-ios-sdk"; requirement = {kind = exactVersion; version = 11.15.0; }; };
+  000000000000000000000021 = {isa = XCSwiftPackageProductDependency; package = 000000000000000000000109; productName = FirebaseCore; };
+  000000000000000000000022 = {isa = XCSwiftPackageProductDependency; package = 000000000000000000000109; productName = FirebaseAuth; };
+  000000000000000000000023 = {isa = XCSwiftPackageProductDependency; package = 000000000000000000000109; productName = FirebaseDatabase; };
+  000000000000000000000024 = {isa = XCSwiftPackageProductDependency; package = 000000000000000000000109; productName = FirebaseFirestore; };
+  00000000000000000000010C = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; IPHONEOS_DEPLOYMENT_TARGET = 16.0; SDKROOT = iphoneos; SWIFT_VERSION = 5.0; DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; GCC_OPTIMIZATION_LEVEL = 0; SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; }; name = Debug; };
+  00000000000000000000010D = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; IPHONEOS_DEPLOYMENT_TARGET = 16.0; SDKROOT = iphoneos; SWIFT_VERSION = 5.0; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; SWIFT_COMPILATION_MODE = wholemodule; }; name = Release; };
+  00000000000000000000010E = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_UILaunchScreen_Generation = YES; MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = pe.edu.tecsup.dma.Lab14IntroFirebase; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; TARGETED_DEVICE_FAMILY = "1,2";}; name = Debug; };
+  00000000000000000000010F = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_UILaunchScreen_Generation = YES; MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = pe.edu.tecsup.dma.Lab14IntroFirebase; PRODUCT_NAME = "$(TARGET_NAME)"; SUPPORTED_PLATFORMS = "iphoneos iphonesimulator"; TARGETED_DEVICE_FAMILY = "1,2";}; name = Release; };
+  00000000000000000000010A = {isa = XCConfigurationList; buildConfigurations = (00000000000000000000010C, 00000000000000000000010D,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+  00000000000000000000010B = {isa = XCConfigurationList; buildConfigurations = (00000000000000000000010E, 00000000000000000000010F,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+ };
+ rootObject = 000000000000000000000100;
+}
